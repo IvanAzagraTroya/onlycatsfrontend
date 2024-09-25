@@ -1,34 +1,41 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Post from './components/Post'
+import { AccountCircleRounded, NotificationsRounded } from '@mui/icons-material'
+import RssFeedRounded from '@mui/icons-material/RssFeedRounded'
+import NotificationAddRounded from '@mui/icons-material/NotificationAddRounded'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="container">
+      <div className="menu-column">
+        <button className="menu-button">
+          <AccountCircleRounded fontSize="large" className='account-button'/>
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <button className="menu-button">
+          <RssFeedRounded fontSize="large" className='rss-button'/>
+        </button>
+        <button className="menu-button">
+          <NotificationsRounded fontSize="large" className='notification-button'/>
+        </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <div className="feed-column">
+        this is the feed mothertrucker
+        <Post displayName={"Test1"} username={"test_user"} verified={true} 
+        text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
+        image={'src/assets/react.svg'} avatar={'src/assets/hollow-heart.svg'}/>
+
+        Post 2
+        <Post displayName={"Test1"} username={"test_user"} verified={true} 
+        text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
+        image={'src/assets/react.svg'} avatar={'src/assets/hollow-heart.svg'}/>
+        Pos3
+        <Post displayName={"Test1"} username={"test_user"} verified={true} 
+        text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
+        image={'src/assets/react.svg'} avatar={'src/assets/hollow-heart.svg'}/>
+      </div>
+    </div>
   )
 }
 

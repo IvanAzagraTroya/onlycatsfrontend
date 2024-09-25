@@ -6,3 +6,14 @@ Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+
+
+# RESOURCES I'D LIKE TO USE:
+- For the onClick() follow button: https://lottiefiles.com/free-animation/confetti-animation-03-l2rZi2DGOI
+
+- For the user button: https://lottiefiles.com/free-animation/user-avatar-yeps28Vxhi
+
+- For likes: https://lottiefiles.com/free-animation/hearts-galore-924ayD2zyM
+
+- For notifications: https://lottiefiles.com/free-animation/alerts-notifications-bell-Xcptholc22

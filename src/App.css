@@ -1,42 +1,54 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.container {
+  display: flex;
+  gap: 10px;
+}
+.menu-column {
+  display: flex;
+  flex-direction: column;
+  width: 7vw;
+  height: 100vh; 
+  justify-content: flex-start;
+  align-items: center;
+  position: fixed;
+  gap: 20px;
+  top: 0;
+  left: 0;
+}
+.feed-column {
+  /* padding-left: 3vw; */
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.menu-column:first-child { 
+  border-right: 1px solid #929292b6;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.menu-container::before {
+  content: '';
+  display: block;
+  width: 1px; 
+  height: 100%;
+}
+.menu-button{
+  background-color: transparent;
+  border: none;
+  border-radius: 100%;
+  height: 5vh;
+  width: 5vw;
+  margin: 5%;
+  background-color: #453a7457;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.menu-container .menu_button button {
+  background-color: transparent;
+  border: none; 
+  padding: 0;
 }
