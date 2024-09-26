@@ -2,8 +2,9 @@
   padding-left: 5vw;
   position: relative;
   width: 80vw;
+  max-height: 600px;
   aspect-ratio: 1/1;
-  height: 65%; /* revert 100% if error */
+  height: 100%; /* revert 100% if error */
 }
 
 .post {
@@ -12,6 +13,7 @@
     border-radius: 20px 0px 0px 20px;
     width: 50vw;
     height: 60vh;
+    min-height: 370px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -95,12 +97,25 @@
     right: 0;
     width: 30vw;
     height: 60vh;
+    min-height: 370px;
     background-color: #d3d4d9;
     backdrop-filter: blur(5px);
     border-radius: 0px 15px 15px 0px;
     text-wrap: pretty;
     overflow-wrap: break-word;
     overflow-y: auto;
+  }
+
+  .comment_title {
+    position: flex;
+    font-size: 2em;
+    align-self: center;
+  }
+
+  .comment_title:first-child{
+    margin-top: 30px;
+    margin-left: 10px;
+    border-bottom: 3px solid #a8a8a84f;
   }
 
 

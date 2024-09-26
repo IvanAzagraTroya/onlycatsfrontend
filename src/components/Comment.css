@@ -1,5 +1,7 @@
-.comment {
-  
+.comment_title b{
+  display: flex;
+  justify-content: center;
+  text-decoration-style: wavy;
 }
 
 .post_header{
@@ -9,15 +11,20 @@
   align-items: center;
 }
 
-.post_headerContent {
+.post_headerText h3 { 
+  display: inline; /* Make the h3 element inline */
+  margin: 0;       /* Remove default margin */
+}
+
+.comment_headerContent {
   display: flex;
   padding-top: 1vh;
   width: 100%;
   align-items: center; /* Vertically align items */   
   flex-wrap: wrap;
 }
-.post_headerContent {
-  margin-left: 15vw; /* Add some space between avatar and text */
+.comment_headerContent {
+  gap:10px;
 }  
 
 .post_headerText h3 { 
@@ -26,13 +33,12 @@
 }
 
 .comment_text {
-    max-height: 100px;
+    max-height: fit-content;
     border-radius: 10%;
     padding: 10px;
     margin-bottom: 5px;
     border-radius: 5px;
     overflow-wrap: break-word;
-    overflow-y: auto;
     text-overflow: ellipsis;
   }
 
@@ -61,5 +67,5 @@
     border-radius: 5px; /* Add a rounded corner to the thumb */
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #d3d4d9; /* Change color on hover */
+    background: transparent; /* Change color on hover */
   }

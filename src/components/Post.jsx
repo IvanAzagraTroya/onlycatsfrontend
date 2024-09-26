@@ -48,7 +48,7 @@ function Post({ displayName, username, verified, text, image, avatar }) {
             <h3>
               {displayName}{' '}
               <span className="post_headerSpecial">
-                {verified && <VerifiedTwoTone className="post__badge" />} @{username}
+                {verified && <VerifiedTwoTone className="post_badge" />} @{username}
               </span>
             </h3>
           </div>
@@ -101,13 +101,19 @@ function Post({ displayName, username, verified, text, image, avatar }) {
       </div>
     </div>
       <div className='comments_container'>
-        {/* {comments.map((comment, index) => ( */}
-          <Comment commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
-          <Comment commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
-          <Comment commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
-          <Comment commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
-          <Comment commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
-        {/* ))} */}
+        <div className='comment_title'>
+          <b>Comments:</b>
+        </div>
+        <div className='comment_reponse'>
+          {/* {comments.map((comment, index) => ( */}
+          {/* ))} */}
+          <Comment commentId={1} commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
+          <Comment commentId={2} commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
+          <Comment commentId={3} commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
+          <Comment commentId={4} commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
+          <Comment commentId={5} commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
+        </div>
+        
       </div>
     </div>
   );

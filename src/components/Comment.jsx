@@ -11,14 +11,17 @@ import { Avatar } from '@mui/material';
 
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 
-const Comment = ({ commentText, avatar, displayName, username, verified }) => {
+const Comment = ({ commentId, commentText, avatar, displayName, username, verified }) => {
 
   const [isLiked, setIsLiked] = useState(false);
   const animationRef = useRef(null);
 
   const [isClicked, setIsClicked] = useState(false);
+
+  const [textClicked, setIsTextClicked] = useState(false);
+  const trimmedComment = commentText.substring(0, 100);
 
   const handleLike = () => {
     setIsLiked(!isLiked);
@@ -38,18 +41,37 @@ const Comment = ({ commentText, avatar, displayName, username, verified }) => {
     }
   }
 
+  const handleExpandText = () => {
+    setIsTextClicked(!textClicked);
+  }
+  
     return (
-      <div className='comment'>
+      <div className='comment' id={"comment-"+commentId}>
+        <div className="comment_headerContent">
+          <Avatar src={avatar} className="post_avatar"/>
           <div className="post_headerText">
             <h3>
-            <Avatar src={avatar} className="post_avatar"/>
               {displayName}{' '}
               <span className="post_headerSpecial">
-                {verified && <VerifiedTwoTone className="post__badge" />} @{username}
+                {verified && <VerifiedTwoTone className="post_badge" />} @{username}
               </span>
             </h3>
           </div>
-        <div className="comment_text">{commentText}</div>
+        </div>
+        <div className="comment_text">
+          <div className="comment_content">
+            <div className={`comment_content ${textClicked ? 'expanded' : ''}`} onClick={handleExpandText}>
+            {textClicked ?  (
+              (commentText)
+            ) : 
+            (
+              <>
+                {trimmedComment} <b> more... </b>
+              </>
+            )}
+            </div>
+          </div>
+        </div>
         <div className='comment_buttons'>
             <button className='fav_button' onClick={handleLike}>
             {isLiked ? ( // Conditionally render the animation or icon
@@ -87,5 +109,4 @@ const Comment = ({ commentText, avatar, displayName, username, verified }) => {
       </div>
     );
   };
-  
   export default Comment;
