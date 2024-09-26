@@ -9,7 +9,7 @@ import { VerifiedTwoTone } from '@mui/icons-material';
 import likeAnimationData from '../assets/like-animation.json';
 import repeatAnimationData from '../assets/repeat-animation.json';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-import QuickPinchZoom, { make3dTransformValue } from "react-quick-pinch-zoom";
+import Comment from '../components/Comment.jsx';
 
 
 
@@ -38,19 +38,9 @@ function Post({ displayName, username, verified, text, image, avatar }) {
     }
   }
 
-  const imgRef = useRef();
-  const onUpdate = useCallback(({ x, y, scale }) => {
-    const { current: img } = imgRef;
-    // check if image exists
-    if (img) {
-      const value = make3dTransformValue({ x, y, scale });
-      img.style.setProperty("transform", value);
-    }
-  }, []);
-
-
   return (
-    <div className="post">
+    <div className='full_component'>
+      <div className="post">
       <div className='post_header'>
         <div className="post_headerContent">
           <Avatar src={avatar} className="post_avatar"/>
@@ -67,7 +57,7 @@ function Post({ displayName, username, verified, text, image, avatar }) {
       <br/>
       <div className="post_body">
         <div className='image-container'>
-              <img width="100%" src={image} ref={imgRef} alt="image" className='post_image'/>
+              <img width="100%" src={image} alt="image" className='post_image'/>
         </div>
         <div className="post_footer">
           <div className='footer_buttons'>
@@ -78,7 +68,7 @@ function Post({ displayName, username, verified, text, image, avatar }) {
                     data={likeAnimationData} 
                     speed={1.5}
                     loop={false} // Ensure animation plays only once
-                    style={{ width: '45px', height: '45px', down:'3px', left:'5pxº', position:'relative' }} // Adjust size as needed
+                    style={{ width: '20px', height: '20px', down:'2px', scale:'2' }} // Adjust size as needed
                   />
                    
                  ) : (
@@ -95,7 +85,7 @@ function Post({ displayName, username, verified, text, image, avatar }) {
                   data ={repeatAnimationData} 
                   loop={false} // Ensure animation plays only once
                   speed={2.5}
-                  style={{ width: '45px', height: '45px', down:'2px', position:'relative' }}
+                  style={{ width: '20px', height: '20px', top:'2px', scale: '2' }}
               /> 
             ) : (
                 <RepeatIcon fontSize="small" />
@@ -108,6 +98,16 @@ function Post({ displayName, username, verified, text, image, avatar }) {
             <p>{text}</p>
           </div>
         </div>
+      </div>
+    </div>
+      <div className='comments_container'>
+        {/* {comments.map((comment, index) => ( */}
+          <Comment commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
+          <Comment commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
+          <Comment commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
+          <Comment commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
+          <Comment commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
+        {/* ))} */}
       </div>
     </div>
   );

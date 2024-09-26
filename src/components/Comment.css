@@ -1,0 +1,65 @@
+.comment {
+  
+}
+
+.post_header{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.post_headerContent {
+  display: flex;
+  padding-top: 1vh;
+  width: 100%;
+  align-items: center; /* Vertically align items */   
+  flex-wrap: wrap;
+}
+.post_headerContent {
+  margin-left: 15vw; /* Add some space between avatar and text */
+}  
+
+.post_headerText h3 { 
+  display: inline; /* Make the h3 element inline */
+  margin: 0;       /* Remove default margin */
+}
+
+.comment_text {
+    max-height: 100px;
+    border-radius: 10%;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    overflow-wrap: break-word;
+    overflow-y: auto;
+    text-overflow: ellipsis;
+  }
+
+  .comment_buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    bottom: 10vh;
+  }
+
+  .comment .comment_buttons button { /* Adjust the selector to target your buttons */
+    background-color: transparent;
+    border: none; 
+    filter: drop-shadow(0 5px rgba(153, 153, 153, 0.671)) ;
+  }
+
+
+  ::-webkit-scrollbar {
+    width: 10px; /* Set the width of the scrollbar */
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent; /* Color of the track */
+  }
+  ::-webkit-scrollbar-thumb {
+    background: transparent; /* Color of the thumb */
+    border-radius: 5px; /* Add a rounded corner to the thumb */
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #d3d4d9; /* Change color on hover */
+  }

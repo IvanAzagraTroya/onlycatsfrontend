@@ -1,7 +1,15 @@
+.full_component {
+  padding-left: 5vw;
+  position: relative;
+  width: 80vw;
+  aspect-ratio: 1/1;
+  height: 65%; /* revert 100% if error */
+}
+
 .post {
-    background-color: rgba(199, 199, 199, 0.603); /* Black with 70% opacity */
+    background-color: #d3c1c39c; /* Black with 70% opacity */
     backdrop-filter: blur(5px);
-    border-radius: 5%;
+    border-radius: 20px 0px 0px 20px;
     width: 50vw;
     height: 60vh;
     display: flex;
@@ -31,26 +39,30 @@
     display: inline; /* Make the h3 element inline */
     margin: 0;       /* Remove default margin */
   }
-
-  .post_avatar {
-    border-radius: 100%;
+  .post_body {
+    display: grid;
+    max-width: 60vw;
   }
-
   .image-container {
     position: relative;
     overflow: hidden;
-    object-fit: cover;  
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    height: 30vh;
+    width: 100%;
+    max-width: 100%;
+    padding-inline: 5px;
   }
 
   .post_image{
     position: relative;
-    height: 30vh;
-    width: 30vw;
+    height: 100%;
+    width: 100%;
     align-self: center;
-    margin-left: 20%;
     max-height: 600px;
     max-width: 810px;
     transition: transform 0.3s ease;
+    background-color: rgba(255, 0, 0, 0.212);
   }
 
   .footer_buttons {
@@ -63,9 +75,7 @@
   .post .footer_buttons button { /* Adjust the selector to target your buttons */
     background-color: transparent;
     border: none; 
-    padding: 0;
-    width: 36px;
-    height: 29px;
+    filter: drop-shadow(0 5px rgba(153, 153, 153, 0.671)) ;
   }
 
   .post_description {
@@ -75,4 +85,35 @@
     overflow-wrap: break-word; 
     max-height: 15vh;
     overflow-y: auto;
+  }
+
+  .comments_container {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    top: 0;
+    right: 0;
+    width: 30vw;
+    height: 60vh;
+    background-color: #d3d4d9;
+    backdrop-filter: blur(5px);
+    border-radius: 0px 15px 15px 0px;
+    text-wrap: pretty;
+    overflow-wrap: break-word;
+    overflow-y: auto;
+  }
+
+
+  ::-webkit-scrollbar {
+    width: 10px; /* Set the width of the scrollbar */
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color of the track */
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the thumb */
+    border-radius: 5px; /* Add a rounded corner to the thumb */
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Change color on hover */
   }

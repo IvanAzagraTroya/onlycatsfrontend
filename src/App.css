@@ -15,7 +15,7 @@
   left: 0;
 }
 .feed-column {
-  /* padding-left: 3vw; */
+  padding-left: 3vw;
   display: flex;
   flex-direction: column;
   width: 90vw;
@@ -25,7 +25,7 @@
 }
 
 .menu-column:first-child { 
-  border-right: 1px solid #929292b6;
+  border-right: 5px solid #a8a8a84f;
 }
 
 .menu-container::before {
@@ -41,14 +41,14 @@
   height: 5vh;
   width: 5vw;
   margin: 5%;
-  background-color: #453a7457;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  filter: drop-shadow(0 5px rgba(153, 153, 153, 0.671)) ;
 }
 
 .menu-container .menu_button button {
-  background-color: transparent;
   border: none; 
   padding: 0;
 }
