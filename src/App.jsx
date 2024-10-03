@@ -1,20 +1,24 @@
-import { useState } from 'react'
 import './App.css'
 import Post from './components/Post'
-import { AccountCircleRounded, NotificationsRounded } from '@mui/icons-material'
-import RssFeedRounded from '@mui/icons-material/RssFeedRounded'
-import NotificationAddRounded from '@mui/icons-material/NotificationAddRounded'
+import { AccountCircleRounded, Home, NotificationsRounded } from '@mui/icons-material'
 
 function App() {
 
   return (
     <div className="container">
+
+      <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" class="gif" />
+      <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" class="gif" />
+      <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" class="gif" />
+      <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" class="gif" />
+      <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" class="gif" />
+
       <div className="menu-column">
         <button className="menu-button">
           <AccountCircleRounded fontSize="large" className='account-button'/>
         </button>
         <button className="menu-button">
-          <RssFeedRounded fontSize="large" className='rss-button'/>
+          <Home fontSize="large" className='rss-button'/>
         </button>
         <button className="menu-button">
           <NotificationsRounded fontSize="large" className='notification-button'/>
@@ -35,6 +39,7 @@ function App() {
         text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
         image={'src/assets/react.svg'} avatar={'src/assets/hollow-heart.svg'}/>
       </div>
+      <div className='sugerence-column'></div>
     </div>
   )
 }

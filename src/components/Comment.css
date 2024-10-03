@@ -1,3 +1,7 @@
+.comment{
+  margin-left: 5px;
+}
+
 .comment_title b{
   display: flex;
   justify-content: center;
@@ -26,11 +30,6 @@
 .comment_headerContent {
   gap:10px;
 }  
-
-.post_headerText h3 { 
-  display: inline; /* Make the h3 element inline */
-  margin: 0;       /* Remove default margin */
-}
 
 .comment_text {
     max-height: fit-content;

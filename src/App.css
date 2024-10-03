@@ -1,5 +1,9 @@
 .container {
   display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+  justify-content: flex-start;
   gap: 10px;
 }
 .menu-column {
@@ -15,10 +19,20 @@
   left: 0;
 }
 .feed-column {
-  padding-left: 3vw;
+  margin-left: 10vw;
   display: flex;
   flex-direction: column;
-  width: 90vw;
+  width: 50vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.sugerence-column {
+  display: flex;
+  position: sticky;
+  flex-direction: column;
+  width: 43vw;
   height: 100vh;
   align-items: center;
   justify-content: flex-start;
@@ -51,4 +65,46 @@
 .menu-container .menu_button button {
   border: none; 
   padding: 0;
+}
+
+body {
+  background-color: darkcyan;
+}
+.gif {
+  position: absolute;
+  animation: moveGifDiagonal 60s linear infinite; /* Example duration */
+}
+@keyframes moveGifDiagonal {
+  0% {
+    transform: translate(0, 0) rotatez(40deg);
+  }
+  100% {
+    transform: translate(100vw, 100vh) rotateZ(40deg);; /* Move to bottom-right corner */
+  }
+}
+
+.gif:nth-child(1) {
+  animation: moveGifDiagonal 10s linear infinite;
+  left:  0px; 
+  top: -100px;
+}
+.gif:nth-child(2) {
+  animation: moveGifDiagonal 12s linear infinite;
+  left:  0px;
+  top: -300px;
+}
+.gif:nth-child(3) {
+  animation: moveGifDiagonal 10s linear infinite;
+  left:  0px; 
+  top: -400px;
+}
+.gif:nth-child(4) {
+  animation: moveGifDiagonal 12s linear infinite;
+  left:  0px;
+  top: -500px;
+}
+.gif:nth-child(5) {
+  animation: moveGifDiagonal 10s linear infinite;
+  left:  0px; 
+  top: -500px;
 }
