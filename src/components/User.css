@@ -1,0 +1,43 @@
+.user-page{
+    background-color: transparent;
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
+    box-shadow: 0px 0px 50px rgba(240, 249, 255, 0.5);
+}
+
+.user-header{
+    background-color: rgba(240, 248, 255, 0.5);
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
+    height: 300px;
+}
+
+.user-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+.user-profile h1 {
+    display: inline;
+    margin: 0;
+}
+
+.user-stats{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.user-stats h3 {
+    display: inline;
+    gap: 10px;
+    margin: 0;
+}
+
+.user-tweets{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}

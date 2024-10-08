@@ -1,18 +1,25 @@
 .full_component {
   display: flex;
   align-items: stretch;
-  padding-left: 5vw;
   position: relative;
   width: 50vw;
-  max-height: 450px;
+  max-height: 600px;
   max-width: 1280px;
-  aspect-ratio: 1/1;
-  height: 100%; /* revert 100% if error */
+  /* aspect-ratio: 1/1; */
+  height: 100%;
   margin: 20px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.full_component:hover {
+  transform: scale(1.15); /* Scale up slightly on hover */
+  box-shadow: 0px 0px 20px rgba(240, 255, 255, 0.849); /* Add or enhance box-shadow */
+  z-index: 1; /* Bring to front */
+  border-radius: 20px;
 }
 
 .post {
-    background-color: #d3c1c39c;
+    background-color: rgba(240, 255, 255, 0.849);
     backdrop-filter: blur(5px);
     border-radius: 20px 0px 0px 20px;
     width: 50vw;
@@ -84,7 +91,7 @@
   .post .footer_buttons button { /* Adjust the selector to target your buttons */
     background-color: transparent;
     border: none; 
-    filter: drop-shadow(0 5px rgba(153, 153, 153, 0.671)) ;
+    filter: drop-shadow(0 5px rgba(119, 119, 119, 0.925)) ;
   }
 
   .post_description {
@@ -107,7 +114,7 @@
     min-height: 370px;
     min-width: 230px;
     max-width: 490px;
-    background-color: #d3d4d9;
+    background-color: azure;
     backdrop-filter: blur(5px);
     border-radius: 0px 15px 15px 0px;
     text-wrap: pretty;

@@ -9,6 +9,8 @@
 .menu-column {
   display: flex;
   flex-direction: column;
+  background-color: rgba(240, 255, 255, 0.788);
+  backdrop-filter: blur(5px);
   width: 7vw;
   height: 100vh; 
   justify-content: flex-start;
@@ -18,7 +20,7 @@
   top: 0;
   left: 0;
 }
-.feed-column {
+.content-column {
   margin-left: 10vw;
   display: flex;
   flex-direction: column;
@@ -59,7 +61,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  filter: drop-shadow(0 5px rgba(153, 153, 153, 0.671)) ;
+  filter: drop-shadow(0 5px rgba(158, 158, 158, 0.925)) ;
 }
 
 .menu-container .menu_button button {
@@ -68,7 +70,7 @@
 }
 
 body {
-  background-color: darkcyan;
+  background-color: rgb(0, 0, 58);
 }
 .gif {
   position: absolute;
@@ -82,29 +84,53 @@ body {
     transform: translate(100vw, 100vh) rotateZ(40deg);; /* Move to bottom-right corner */
   }
 }
+@keyframes moveGifDiagonal2 {
+  0% {
+    transform: translate(100vh, 0) rotateZ(-30deg) rotateY(-180deg);
+  }
+  100% {
+    transform: translate(-100vw, 100vh) rotateZ(-30deg) rotateY(-180deg); /* Move to bottom-right corner */
+  }
+}
 
 .gif:nth-child(1) {
-  animation: moveGifDiagonal 10s linear infinite;
+  animation: moveGifDiagonal 20s linear infinite;
   left:  0px; 
   top: -100px;
 }
 .gif:nth-child(2) {
-  animation: moveGifDiagonal 12s linear infinite;
+  animation: moveGifDiagonal 22s linear infinite;
   left:  0px;
-  top: -300px;
+  top: -200px;
 }
 .gif:nth-child(3) {
-  animation: moveGifDiagonal 10s linear infinite;
+  animation: moveGifDiagonal 30s linear infinite;
   left:  0px; 
-  top: -400px;
+  top: -300px;
 }
 .gif:nth-child(4) {
-  animation: moveGifDiagonal 12s linear infinite;
+  animation: moveGifDiagonal 23s linear infinite;
   left:  0px;
   top: -500px;
 }
 .gif:nth-child(5) {
-  animation: moveGifDiagonal 10s linear infinite;
+  animation: moveGifDiagonal 20s linear infinite;
   left:  0px; 
   top: -500px;
+}
+
+.gif:nth-child(6) {
+  animation: moveGifDiagonal2 25s linear infinite;
+  right:  50px; 
+  top: -60px;
+}
+.gif:nth-child(7) {
+  animation: moveGifDiagonal2 18s linear infinite;
+  right:  0px; 
+  top: -10px;
+}
+.gif:nth-child(8) {
+  animation: moveGifDiagonal2 16s linear infinite;
+  right:  0px; 
+  top: -50px;
 }
