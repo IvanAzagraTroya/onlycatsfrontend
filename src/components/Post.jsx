@@ -1,4 +1,4 @@
-import React, {useState, useRef, useCallback} from 'react';
+import React, {useState, useRef, useParams, useCallback} from 'react';
 import './Post.css';
 import { Avatar } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
@@ -9,7 +9,7 @@ import likeAnimationData from '../assets/like-animation.json';
 import repeatAnimationData from '../assets/repeat-animation.json';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import Comment from '../components/Comment.jsx';
-
+import useFetch from '../utils/UseFetch';
 
 
 function Post({ displayName, username, verified, text, image, avatar }) {
@@ -36,6 +36,9 @@ function Post({ displayName, username, verified, text, image, avatar }) {
       animationRef.current.stop();
     }
   }
+
+  //const {id} = useParams();
+  //const {data: post, error, isPending} = useFetch(`http://localhost:8000/posts/${id}`)
 
   return (
     <div className='full_component'>

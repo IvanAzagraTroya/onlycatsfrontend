@@ -48,7 +48,7 @@ function App() {
   console.log(posts.data)
   console.log(comments.data)
   console.log(activity.data)
-
+// Puedo hacer una comprobación en el isPending de los useFetch para que desplegue la animación de carga de la pata de gato hasta tener los datos listos.
   return (
     <div>
       <h1 className="web-header">Onlycats <img src='src/assets/nyan-cat.gif'/></h1>

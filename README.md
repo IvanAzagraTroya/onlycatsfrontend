@@ -21,3 +21,8 @@ Currently, two official plugins are available:
 
 Things i need to work with:
 https://www.geeksforgeeks.org/upload-and-retrieve-image-on-mongodb-using-mongoose/
+
+https://www.freecodecamp.org/news/json-server-for-frontend-development/
+
+storage images in mongodb:
+String newFileName = "my-image"; File imageFile = new File("/users/victor/images/image.png"); GridFS gfsPhoto = new GridFS(db, "photo"); GridFSInputFile gfsFile = gfsPhoto.createFile(imageFile); gfsFile.setFilename(newFileName); gfsFile.save();
