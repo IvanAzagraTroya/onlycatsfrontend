@@ -6,6 +6,7 @@ import PublishIcon from '@mui/icons-material/Publish';
 import User from './components/User';
 import Notification from './components/Notifications';
 import Upload from './components/Upload';
+import useFetch from './utils/UseFetch';
 
 function App() {
   const [isFeedSelected, setIsFeedSelected] = useState(true);
@@ -38,6 +39,16 @@ function App() {
     setIsPublishSelected(true);
   }
 
+  const users = useFetch('http://localhost:8000/users')
+  const posts = useFetch('http://localhost:8000/posts')
+  const comments = useFetch('http://localhost:8000/comments')
+  const activity = useFetch('http://localhost:8000/activity')
+
+  console.log(users.data)
+  console.log(posts.data)
+  console.log(comments.data)
+  console.log(activity.data)
+
   return (
     <div>
       <h1 className="web-header">Onlycats <img src='src/assets/nyan-cat.gif'/></h1>
@@ -68,7 +79,6 @@ function App() {
         <div className="content-column">
           {isFeedSelected ?(
             <div className='content-container'>
-              {console.log("Feed: ", isFeedSelected)}
               <Post displayName={"Test1"} username={"test_user1"} verified={true} 
               text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
               image={'src/assets/react.svg'} avatar={'src/assets/hollow-heart.svg'}/>

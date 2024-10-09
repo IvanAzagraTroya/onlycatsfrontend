@@ -32,20 +32,24 @@ function Upload() {
     return (
         <div className='upload-container'>
             <h1>Upload a File</h1>
-            <input type="file" id="fileInput" 
-            ref={fileInputRef} onChange={handleFileChange} />
-            <button onClick={handleUploadClick}>
-                {isUploading ? (
-                    <DotLottieReact
-                        autoplay={true}
-                        data={uploadAnimationData}
-                        speed={1}
-                        loop={false}
-                        style={{ width: '20px', height: '20px', down:'2px', scale:'2' }}
-                    />
-                ):(<PublishIcon/>)}
-                
-            </button>
+            <form action="http://localhost:8000/posts" method="POST" enctype="multipart/form-data">
+                <input type="file" id="fileInput" 
+                ref={fileInputRef} onChange={handleFileChange} />
+                <br />
+                <textarea value="" id="commentInput" />
+                <br />
+                <button onClick={handleUploadClick}>
+                    {isUploading ? (
+                        <DotLottieReact
+                            autoplay={true}
+                            data={uploadAnimationData}
+                            speed={1}
+                            loop={false}
+                            style={{ width: '20px', height: '20px', down:'2px', scale:'2' }}
+                        />
+                    ):(<PublishIcon/>)}
+                </button>
+            </form>
             <div className='image-preview'>
                 {imagePreview && (
                 <img src={imagePreview} alt="Image Preview" style={{ aspectRatio: '1/1' }} />

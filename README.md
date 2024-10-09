@@ -17,3 +17,7 @@ Currently, two official plugins are available:
 - For likes: https://lottiefiles.com/free-animation/hearts-galore-924ayD2zyM
 
 - For notifications: https://lottiefiles.com/free-animation/alerts-notifications-bell-Xcptholc22
+
+
+Things i need to work with:
+https://www.geeksforgeeks.org/upload-and-retrieve-image-on-mongodb-using-mongoose/
