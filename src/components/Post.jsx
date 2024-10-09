@@ -4,7 +4,6 @@ import { Avatar } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import PublishIcon from '@mui/icons-material/Publish';
 import { VerifiedTwoTone } from '@mui/icons-material';
 import likeAnimationData from '../assets/like-animation.json';
 import repeatAnimationData from '../assets/repeat-animation.json';
@@ -68,7 +67,7 @@ function Post({ displayName, username, verified, text, image, avatar }) {
                     data={likeAnimationData} 
                     speed={1.5}
                     loop={false} // Ensure animation plays only once
-                    style={{ width: '20px', height: '20px', down:'2px', scale:'2' }} // Adjust size as needed
+                    style={{ width: '20px', height: '20px', down:'2px', scale:'2' }}
                   />
                    
                  ) : (
