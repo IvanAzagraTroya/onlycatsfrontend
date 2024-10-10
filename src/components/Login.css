@@ -1,0 +1,26 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    background-color: rgba(240, 255, 255, 0.85);
+    border-radius: 20px;
+    margin-top: 70px;
+    margin-left: 100px;
+    height: 80vh;
+    width: 50vw;
+    z-index: 2;
+    backdrop-filter: blur(5px);
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+.form-group{
+    width: 50px;
+    align-self: center;
+}
+.form-group input{
+    background-color: azure;
+    border: 2px solid lightblue;
+    padding: 10px;
+    border-radius: 5px;
+}
