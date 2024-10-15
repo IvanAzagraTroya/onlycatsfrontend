@@ -7,12 +7,16 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { VerifiedTwoTone } from '@mui/icons-material';
 import likeAnimationData from '../assets/like-animation.json';
 import repeatAnimationData from '../assets/repeat-animation.json';
+import likeAnimationData from '/public/like-animation.json';
+import repeatAnimationData from '/public/repeat-animation.json';
+import loadCatPaw from '/public/cat-paw-load2.json';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import Comment from '../components/Comment.jsx';
 import useFetch from '../utils/UseFetch';
 
 
 function Post({ displayName, username, verified, text, image, avatar }) {
+function Post({ id, owner_id, displayName, username, verified, text, image, avatar, likes, date }) {
 
   const [isLiked, setIsLiked] = useState(false);
   const animationRef = useRef(null);
@@ -39,6 +43,9 @@ function Post({ displayName, username, verified, text, image, avatar }) {
 
   //const {id} = useParams();
   //const {data: post, error, isPending} = useFetch(`http://localhost:8000/posts/${id}`)
+  const comments = useFetch('http://localhost:8000/comments')
+  const activity = useFetch('http://localhost:8000/activity')
+  const commentsReady = comments.data;
 
   return (
     <div className='full_component'>
@@ -65,11 +72,13 @@ function Post({ displayName, username, verified, text, image, avatar }) {
           <div className='footer_buttons'>
             <button className='fav_button' onClick={handleLike}>
             {isLiked ? ( // Conditionally render the animation or icon
+            {isLiked ? (
                   <DotLottieReact
                     autoplay={true}
                     data={likeAnimationData} 
                     speed={1.5}
                     loop={false} // Ensure animation plays only once
+                    loop={false}
                     style={{ width: '20px', height: '20px', down:'2px', scale:'2' }}
                   />
                    
@@ -114,6 +123,39 @@ function Post({ displayName, username, verified, text, image, avatar }) {
           <Comment commentId={3} commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
           <Comment commentId={4} commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
           <Comment commentId={5} commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
+        { !comments.isPending ? (
+            commentsReady.filter(comment => comment.post_id === parseInt(id))
+             .map((comment) => ( 
+               <Comment 
+                commentId={comment.id} 
+                commentText={comment.content} 
+                displayName={comment.display_name} 
+                username={comment.username} 
+                avatar={comment.avatar}
+                date = {comment.comment_date}
+                likes = {comment.likes}
+              />
+            ))
+          ) : (
+          <>
+            {(comments.isPending) ? (
+              <DotLottieReact
+                autoplay={true}
+                data={loadCatPaw}
+                speed={1}
+                loop={true}
+                />
+            ):(null)
+            }
+          </>
+          )
+          }
+
+          
+          {/* <Comment commentId={2} commentText={text} displayName={displayName} username={username} avatar={avatar} />
+          <Comment commentId={3} commentText={text} displayName={displayName} username={username} avatar={avatar} />
+          <Comment commentId={4} commentText={text} displayName={displayName} username={username} avatar={avatar} />
+          <Comment commentId={5} commentText={text} displayName={displayName} username={username} avatar={avatar} /> */}
         </div>
         
       </div>

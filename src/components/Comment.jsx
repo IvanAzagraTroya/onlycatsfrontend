@@ -7,6 +7,10 @@ import { VerifiedTwoTone } from '@mui/icons-material';
 
 import likeAnimationData from '../assets/like-animation.json';
 import repeatAnimationData from '../assets/repeat-animation.json';
+
+import likeAnimationData from '/public/like-animation.json';
+import repeatAnimationData from '/public/repeat-animation.json';
+>>>>>>> Stashed changes
 import { Avatar } from '@mui/material';
 
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
@@ -14,6 +18,9 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import React, {useState, useRef, useEffect} from 'react';
 
 const Comment = ({ commentId, commentText, avatar, displayName, username, verified }) => {
+import useFetch from '../utils/UseFetch';
+
+const Comment = ({ commentText, avatar, displayName, username, date, likes }) => {
 
   const [isLiked, setIsLiked] = useState(false);
   const animationRef = useRef(null);
@@ -22,6 +29,12 @@ const Comment = ({ commentId, commentText, avatar, displayName, username, verifi
 
   const [textClicked, setIsTextClicked] = useState(false);
   const trimmedComment = commentText.substring(0, 100);
+  var trimmedComment = "";
+
+  var currentLikes = likes;
+  if(commentText.length > 100) {
+    trimmedComment = commentText.substring(0, 100);
+  }else {trimmedComment = commentText}
 
   const handleLike = () => {
     setIsLiked(!isLiked);
@@ -38,6 +51,10 @@ const Comment = ({ commentId, commentText, avatar, displayName, username, verifi
       animationRef.current.play();
     }else if(isClicked && animationRef.current){
       animationRef.current.stop();
+      currentLikes = likes+1;
+    }else if(isClicked && animationRef.current){
+      animationRef.current.stop();
+      currentLikes = currentLikes -1;
     }
   }
 
@@ -47,6 +64,14 @@ const Comment = ({ commentId, commentText, avatar, displayName, username, verifi
   
     return (
       <div className='comment' id={"comment-"+commentId}>
+
+  const comments = useFetch('http://localhost:8000/comments')
+  const activity = useFetch('http://localhost:8000/activity')
+  const commentsReady = comments.data;
+  const activityReady = activity.data;
+  
+    return (
+      <div className='comment'>
         <div className="comment_headerContent">
           <Avatar src={avatar} className="post_avatar"/>
           <div className="post_headerText">
@@ -54,6 +79,7 @@ const Comment = ({ commentId, commentText, avatar, displayName, username, verifi
               {displayName}{' '}
               <span className="post_headerSpecial">
                 {verified && <VerifiedTwoTone className="post_badge" />} @{username}
+                @{username}
               </span>
             </h3>
           </div>
@@ -75,6 +101,10 @@ const Comment = ({ commentId, commentText, avatar, displayName, username, verifi
         <div className='comment_buttons'>
             <button className='fav_button' onClick={handleLike}>
             {isLiked ? ( // Conditionally render the animation or icon
+        <p>date: {date}</p>
+        <div className='comment_buttons'>
+            <button className='fav_button' onClick={handleLike}>
+            {isLiked ? ( 
                   <DotLottieReact
                     autoplay={true}
                     data={likeAnimationData} 
@@ -88,6 +118,7 @@ const Comment = ({ commentId, commentText, avatar, displayName, username, verifi
                  )}
 
             </button> 
+            </button> <p>{currentLikes}</p>
             <button>
               <ChatBubbleOutlineIcon fontSize="small" />
             </button>
@@ -96,6 +127,7 @@ const Comment = ({ commentId, commentText, avatar, displayName, username, verifi
                   autoplay={true}
                   data ={repeatAnimationData} 
                   loop={false} // Ensure animation plays only once
+                  loop={false}
                   speed={2.5}
                   style={{ width: '20px', height: '20px', down:'2px', position:'relative', scale: '2' }}
               /> 

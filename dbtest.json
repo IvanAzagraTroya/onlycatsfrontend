@@ -54,6 +54,9 @@
             "post_date": "07/10/24",
             "likes": 1234,
             "dislikes": 2
+            "text": "this is a test text 1",
+            "post_date": "07/10/24",
+            "likes": 1234
         },
         {
             "id": 2,
@@ -62,6 +65,9 @@
             "post_date": "08/10/24",
             "likes": 12,
             "dislikes": 112
+            "text": "this is a test text 2",
+            "post_date": "08/10/24",
+            "likes": 12
         },
         {
             "id": 3,
@@ -70,6 +76,9 @@
             "post_date": "17/10/24",
             "likes": 34,
             "dislikes": 21
+            "text": "this is a test text 3",
+            "post_date": "17/10/24",
+            "likes": 34
         },
         {
             "id": 4,
@@ -78,6 +87,8 @@
             "post_date": "27/10/24",
             "likes": 12345,
             "dislikes": 20
+            "text": "this is a test text 4",
+            "likes": 12345
         }
     ],
     "activity": [
@@ -86,6 +97,7 @@
             "user_id": 1,
             "post_id": 1,
             "text": "",
+            "text": "i want some patatas fritas",
             "reaction_type": "Like",
             "activity_date": "03/03/23"
         },
@@ -95,6 +107,7 @@
             "post_id": 2,
             "text": "",
             "reaction_type": "Disike",
+            "reaction_type": "Like",
             "activity_date": "03/04/23"
         },
         {
@@ -139,6 +152,12 @@
             "comment_date": "08/12/24",
             "likes": 123,
             "dislikes": 321
+            "display_name":"ma display_name 1",
+            "username":"ma username 1",
+            "avatar": "",
+            "content": "Este es un comentario de prueba 1",
+            "comment_date": "08/12/24",
+            "likes": 123
         },
         {
             "id": 2,
@@ -148,6 +167,12 @@
             "comment_date": "08/12/22",
             "likes": 23,
             "dislikes": 2321
+            "display_name":"ma display_name 2",
+            "username":"ma username 2",
+            "avatar": "",
+            "content": "Este es un comentario de prueba 2",
+            "comment_date": "08/12/22",
+            "likes": 23
         },
         {
             "id": 3,
@@ -157,6 +182,12 @@
             "comment_date": "03/01/23",
             "likes": 1333,
             "dislikes": 31
+            "display_name":"ma display_name 3",
+            "username":"ma username 3",
+            "avatar": "",
+            "content": "Este es un comentario de prueba 3",
+            "comment_date": "03/01/23",
+            "likes": 1333
         },
         {
             "id": 4,
@@ -166,6 +197,12 @@
             "comment_date": "04/12/24",
             "likes": 12443,
             "dislikes": 34421
+            "display_name":"ma display_name 4",
+            "username":"ma username 4",
+            "avatar": "",
+            "content": "Este es un comentario de prueba 4",
+            "comment_date": "04/12/24",
+            "likes": 12443
         }
     ]
 }

@@ -40,9 +40,11 @@
   position: fixed;
   gap: 20px;
   left: 0;
+  z-index: 10;
 }
 .content-column {
   /* margin-left: 10vw; */
+  margin-left: 10vw;
   display: flex;
   flex-direction: column;
   width: 50vw;

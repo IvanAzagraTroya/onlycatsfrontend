@@ -3,6 +3,7 @@ import PublishIcon from '@mui/icons-material/Publish';
 import './Upload.css'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import uploadAnimationData from '../assets/upload-animation.json';
+import uploadAnimationData from '/public/upload-animation.json';
 
 function Upload() {
     const fileInputRef = useRef(null);
@@ -37,6 +38,11 @@ function Upload() {
                 ref={fileInputRef} onChange={handleFileChange} />
                 <br />
                 <textarea value="" id="commentInput" />
+            <form action="http://localhost:8000/posts" method="POST" encType="multipart/form-data">
+                <input type="file" id="fileInput" 
+                ref={fileInputRef} onChange={handleFileChange} />
+                <br />
+                <textarea id="commentInput" />
                 <br />
                 <button onClick={handleUploadClick}>
                     {isUploading ? (
