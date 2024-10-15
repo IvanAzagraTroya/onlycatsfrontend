@@ -1,17 +1,6 @@
 import './User.css';
 import { Avatar } from '@mui/material';
 import Post from '../components/Post'
-<<<<<<< Updated upstream
-
-function User() {
-    return(
-        <div className="user-page">
-            <div className='user-header'>
-                <div className="user-profile">
-                    <Avatar />
-                    <h1>User name is name</h1> 
-                    @username
-=======
 import useFetch from '../utils/UseFetch';
 
 function User(id, display_name, username, profile_picture, follower_number, following_number, number_posts) {
@@ -37,34 +26,19 @@ function User(id, display_name, username, profile_picture, follower_number, foll
                     <Avatar/>
                     <h1>{user.display_name}</h1> 
                     @{user.username}
->>>>>>> Stashed changes
                 </div>
                 <div className="user-stats">
                     {/* User Stats like Followers, Following, Tweets */}
                     <div>
-<<<<<<< Updated upstream
-                        <h3>Posts</h3> 123
-                    
-                        <h3>Following</h3> 456
-
-                        <h3>Followers</h3> 789
-=======
                         <h3>Posts</h3> {user.number_posts}
                     
                         <h3>Following</h3> {user.following_number}
 
                         <h3>Followers</h3> {user.follower_number}
->>>>>>> Stashed changes
                     </div>
                 </div>
             </div>
             <div className="user-tweets">
-<<<<<<< Updated upstream
-                {/* List of User's Tweets */}
-                {/* You can implement this using a map function to render each tweet */}
-                {/* Example: tweets.map((tweet) => <Tweet tweet={tweet} />) */}
-                <Post displayName={"Test1"} username={"test_user"} verified={true} 
-=======
             {!posts.isPending ? postsReady.map((post) => {
                 // Find the corresponding user in usersReady based on a common ID
                 
@@ -94,7 +68,6 @@ function User(id, display_name, username, profile_picture, follower_number, foll
                 {/* You can implement this using a map function to render each tweet */}
                 {/* Example: tweets.map((tweet) => <Tweet tweet={tweet} />) */}
                 {/* <Post displayName={"Test1"} username={"test_user"} verified={true} 
->>>>>>> Stashed changes
                 text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
                 image={'src/assets/react.svg'} avatar={'src/assets/hollow-heart.svg'}/>
 
@@ -105,10 +78,6 @@ function User(id, display_name, username, profile_picture, follower_number, foll
                 Pos3
                 <Post displayName={"Test1"} username={"test_user"} verified={true} 
                 text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
-<<<<<<< Updated upstream
-                image={'src/assets/react.svg'} avatar={'src/assets/hollow-heart.svg'}/>
-            </div>
-=======
                 image={'src/assets/react.svg'} avatar={'src/assets/hollow-heart.svg'}/> */}
             </div>
             </div>
@@ -117,7 +86,6 @@ function User(id, display_name, username, profile_picture, follower_number, foll
             console.log("no pilla el usuario")
           )}
 
->>>>>>> Stashed changes
         </div>
     );
 }

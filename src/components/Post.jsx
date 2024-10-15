@@ -12,12 +12,7 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import Comment from '../components/Comment.jsx';
 import useFetch from '../utils/UseFetch';
 
-<<<<<<< Updated upstream
-
-function Post({ displayName, username, verified, text, image, avatar }) {
-=======
 function Post({ id, owner_id, displayName, username, verified, text, image, avatar, likes, date }) {
->>>>>>> Stashed changes
 
   const [isLiked, setIsLiked] = useState(false);
   const animationRef = useRef(null);
@@ -42,14 +37,9 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
     }
   }
 
-<<<<<<< Updated upstream
-  //const {id} = useParams();
-  //const {data: post, error, isPending} = useFetch(`http://localhost:8000/posts/${id}`)
-=======
   const comments = useFetch('http://localhost:8000/comments')
   const activity = useFetch('http://localhost:8000/activity')
   const commentsReady = comments.data;
->>>>>>> Stashed changes
 
   return (
     <div className='full_component'>
@@ -80,11 +70,7 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
                     autoplay={true}
                     data={likeAnimationData} 
                     speed={1.5}
-<<<<<<< Updated upstream
-                    loop={false} // Ensure animation plays only once
-=======
                     loop={false}
->>>>>>> Stashed changes
                     style={{ width: '20px', height: '20px', down:'2px', scale:'2' }}
                   />
                    
@@ -121,15 +107,6 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
           <b>Comments:</b>
         </div>
         <div className='comment_reponse'>
-<<<<<<< Updated upstream
-          {/* {comments.map((comment, index) => ( */}
-          {/* ))} */}
-          <Comment commentId={1} commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
-          <Comment commentId={2} commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
-          <Comment commentId={3} commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
-          <Comment commentId={4} commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
-          <Comment commentId={5} commentText={text} displayName={displayName} username={username} avatar={avatar} verified={verified}/>
-=======
         { !comments.isPending ? (
             commentsReady.filter(comment => comment.post_id === parseInt(id))
              .map((comment) => ( 
@@ -163,7 +140,6 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
           <Comment commentId={3} commentText={text} displayName={displayName} username={username} avatar={avatar} />
           <Comment commentId={4} commentText={text} displayName={displayName} username={username} avatar={avatar} />
           <Comment commentId={5} commentText={text} displayName={displayName} username={username} avatar={avatar} /> */}
->>>>>>> Stashed changes
         </div>
         
       </div>

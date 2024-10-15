@@ -17,16 +17,12 @@ function Login({onLoginSuccess}) {
     }
   };
   const handleRegister = () => {
-<<<<<<< Updated upstream
-    console.log("Registered user")
-=======
     const emailPattern = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$/;
     if(email.length == 0 || !emailPattern.test(email)){
       console.log("Error registering user");
     }else {
       console.log("Registered user")
     }
->>>>>>> Stashed changes
     console.log('Email:', email);
     console.log('Password:', password);
   };

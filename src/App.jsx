@@ -8,11 +8,8 @@ import Notification from './components/Notifications';
 import Upload from './components/Upload';
 import useFetch from './utils/UseFetch';
 import Login from './components/Login';
-<<<<<<< Updated upstream
-=======
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import loadCatPaw from '/public/cat-paw-load2.json';
->>>>>>> Stashed changes
 
 function App() {
   const [isFeedSelected, setIsFeedSelected] = useState(true);
@@ -20,8 +17,6 @@ function App() {
   const [isNotificationsSelected, setIsNotificationsSelected] = useState(false);
   const [isPublishSelected, setIsPublishSelected] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
-<<<<<<< Updated upstream
-=======
 
   function handleFeedClick() {
     setIsFeedSelected(true);
@@ -55,7 +50,6 @@ function App() {
   const usersReady = users.data;
   const postsReady = posts.data;
   const activityReady = activity.data;
->>>>>>> Stashed changes
 
   function handleFeedClick() {
     setIsFeedSelected(true);
@@ -81,23 +75,6 @@ function App() {
     setIsNotificationsSelected(false);
     setIsPublishSelected(true);
   }
-
-  function handleLoging() {
-    if(isLogged == false){
-      console.log("It's not logged")
-    }
-  }
-
-  const users = useFetch('http://localhost:8000/users')
-  const posts = useFetch('http://localhost:8000/posts')
-  const comments = useFetch('http://localhost:8000/comments')
-  const activity = useFetch('http://localhost:8000/activity')
-
-  console.log(users.data)
-  console.log(posts.data)
-  console.log(comments.data)
-  console.log(activity.data)
-// Puedo hacer una comprobación en el isPending de los useFetch para que desplegue la animación de carga de la pata de gato hasta tener los datos listos.
   return (
     <div>
       <h1 className="web-header">Onlycats <img src='src/assets/nyan-cat.gif'/></h1>
@@ -126,28 +103,6 @@ function App() {
           </button>
         </div>
         <div className="content-column">
-<<<<<<< Updated upstream
-          {isFeedSelected ?(
-            <div className='content-container'>
-              <Post displayName={"Test1"} username={"test_user1"} verified={true} 
-              text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
-              image={'src/assets/react.svg'} avatar={'src/assets/hollow-heart.svg'}/>
-    
-              <Post displayName={"Test2"} username={"test_user2"} verified={false} 
-              text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
-              image={'src/assets/react.svg'} avatar={'src/assets/hollow-heart.svg'}/>
-    
-              <Post displayName={"Test3"} username={"test_user3"} verified={true} 
-              text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
-              image={'src/assets/react.svg'} avatar={'src/assets/hollow-heart.svg'}/>
-            </div>
-          ) : (
-            null
-          )}
-          {isLogged ? (
-            <div>
-              {isProfileSelected ? (
-=======
           {isFeedSelected && !posts.isPending && !users.isPending ? (
 
             <div className='content-container'>
@@ -188,21 +143,10 @@ function App() {
           {isLogged ? (
             <div>
               {isProfileSelected && !users.isPending ? (
->>>>>>> Stashed changes
                 <div className='content-container'>
                   <User />
                 </div>
               ): (
-<<<<<<< Updated upstream
-                null
-              )}
-              {isNotificationsSelected ? (
-                <div className='content-container'>
-                  <Notification displayName="name-notification1" text="somebody liked ur noods" type="like" />
-                  <Notification displayName="name-notification2" text="somebody shared ur noods" type="shared" />
-                  <Notification displayName="name-notification3" text="somebody disliked ur noods" type="dislike" />
-                  <Notification displayName="name-notification4" text="somebody liked ur noods" type="like" />
-=======
                 <>
                 {users.isPending && isLogged ? (null
                   // <DotLottieReact
@@ -238,7 +182,6 @@ function App() {
                   <Notification displayName="name-notification2" text="somebody shared ur noods" type="shared" />
                   <Notification displayName="name-notification3" text="somebody disliked ur noods" type="dislike" />
                   <Notification displayName="name-notification4" text="somebody liked ur noods" type="like" /> */}
->>>>>>> Stashed changes
                 </div>
               ): (
                 null
@@ -250,13 +193,6 @@ function App() {
               )}
             </div>
           ):(
-<<<<<<< Updated upstream
-            <Login onLoginSuccess={() => setIsLogged(true)}/>
-          )}
-        </div>
-        <div className='sugerence-column'></div>
-      </div> 
-=======
             <>
             {!isFeedSelected ? (
               <Login onLoginSuccess={() => setIsLogged(true)}/>
@@ -267,7 +203,6 @@ function App() {
         </div>
         <div className='sugerence-column'></div>
       </div>
->>>>>>> Stashed changes
     </div>
   )
 }
