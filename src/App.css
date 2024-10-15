@@ -43,8 +43,11 @@
   z-index: 10;
 }
 .content-column {
+<<<<<<< Updated upstream
   /* margin-left: 10vw; */
+=======
   margin-left: 10vw;
+>>>>>>> Stashed changes
   display: flex;
   flex-direction: column;
   width: 50vw;

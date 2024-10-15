@@ -8,8 +8,11 @@ import Notification from './components/Notifications';
 import Upload from './components/Upload';
 import useFetch from './utils/UseFetch';
 import Login from './components/Login';
+<<<<<<< Updated upstream
+=======
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import loadCatPaw from '/public/cat-paw-load2.json';
+>>>>>>> Stashed changes
 
 function App() {
   const [isFeedSelected, setIsFeedSelected] = useState(true);
@@ -17,6 +20,8 @@ function App() {
   const [isNotificationsSelected, setIsNotificationsSelected] = useState(false);
   const [isPublishSelected, setIsPublishSelected] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
+<<<<<<< Updated upstream
+=======
 
   function handleFeedClick() {
     setIsFeedSelected(true);
@@ -50,6 +55,7 @@ function App() {
   const usersReady = users.data;
   const postsReady = posts.data;
   const activityReady = activity.data;
+>>>>>>> Stashed changes
 
   function handleFeedClick() {
     setIsFeedSelected(true);
@@ -120,6 +126,7 @@ function App() {
           </button>
         </div>
         <div className="content-column">
+<<<<<<< Updated upstream
           {isFeedSelected ?(
             <div className='content-container'>
               <Post displayName={"Test1"} username={"test_user1"} verified={true} 
@@ -140,6 +147,7 @@ function App() {
           {isLogged ? (
             <div>
               {isProfileSelected ? (
+=======
           {isFeedSelected && !posts.isPending && !users.isPending ? (
 
             <div className='content-container'>
@@ -180,10 +188,12 @@ function App() {
           {isLogged ? (
             <div>
               {isProfileSelected && !users.isPending ? (
+>>>>>>> Stashed changes
                 <div className='content-container'>
                   <User />
                 </div>
               ): (
+<<<<<<< Updated upstream
                 null
               )}
               {isNotificationsSelected ? (
@@ -192,6 +202,7 @@ function App() {
                   <Notification displayName="name-notification2" text="somebody shared ur noods" type="shared" />
                   <Notification displayName="name-notification3" text="somebody disliked ur noods" type="dislike" />
                   <Notification displayName="name-notification4" text="somebody liked ur noods" type="like" />
+=======
                 <>
                 {users.isPending && isLogged ? (null
                   // <DotLottieReact
@@ -227,6 +238,7 @@ function App() {
                   <Notification displayName="name-notification2" text="somebody shared ur noods" type="shared" />
                   <Notification displayName="name-notification3" text="somebody disliked ur noods" type="dislike" />
                   <Notification displayName="name-notification4" text="somebody liked ur noods" type="like" /> */}
+>>>>>>> Stashed changes
                 </div>
               ): (
                 null
@@ -238,11 +250,13 @@ function App() {
               )}
             </div>
           ):(
+<<<<<<< Updated upstream
             <Login onLoginSuccess={() => setIsLogged(true)}/>
           )}
         </div>
         <div className='sugerence-column'></div>
       </div> 
+=======
             <>
             {!isFeedSelected ? (
               <Login onLoginSuccess={() => setIsLogged(true)}/>
@@ -253,6 +267,7 @@ function App() {
         </div>
         <div className='sugerence-column'></div>
       </div>
+>>>>>>> Stashed changes
     </div>
   )
 }

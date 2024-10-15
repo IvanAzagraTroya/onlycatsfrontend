@@ -39,12 +39,15 @@
 
 .user-tweets{
     display: flex;
+<<<<<<< Updated upstream
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
+=======
     margin-left:50px;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     height: 60vh;
+>>>>>>> Stashed changes
 }
