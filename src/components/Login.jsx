@@ -3,42 +3,66 @@ import './Login.css';
 import axios from 'axios';
 
 function Login({onLoginSuccess}) {
-  const userEmail = 'user@email.com';
+  const userEmail = 'new@email.com';
   const userPassword = 'psw';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  const handleLogin = () => {
-    // Here, you would typically make an API call to your backend
-    // to authenticate the user. For now, we'll just log the input.
-
+  const handleLogin = async () => {
+    //Get user for login once i have the waypoint done, doesn't work on json-server
     try{
-      const log = axios.get('http://localhost:8000/users?email='+userEmail+'}')
+      const log = await axios.get('http://localhost:8000/users?email='+userEmail+'}')
       .then(function(response){
         if(response.status != 200){
           throw new Error("Error in login");
         }
+
+        //Until i have the users waypoint and db
+        response.data.forEach(element => {
+          if(element.email == email){
+            onLoginSuccess();
+            console.log("Logged in");
+          }
+        });
+        
         console.log(response);
       });
     } catch(exception){
       console.error(exception, response)
     }
 
-    // If authentication is successful, redirect to the main app.
     if(userEmail == email && userPassword == password){
       onLoginSuccess();
       console.log("Logged in succesfully")
     }
   };
-  const handleRegister = () => {
+  const handleRegister = async () => {
     const emailPattern = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$/;
     if(email.length == 0 || !emailPattern.test(email)){
-      console.log("Error registering user");
+      console.log("Error with email");
     }else {
-      console.log("Registered user")
+      try{
+        const formData = await axios.post('http://localhost:8000/users', {
+            id: 10,
+            display_name: email,
+            username: "@"+email,
+            profile_picture: "",
+            follower_number: 0,
+            following_number: 0,
+            number_posts: 0
+          },{
+              headers: {
+                  'Content-Type': 'multipart/json',
+                  //'Authorization': 
+              }
+          });
+          if (formData.status != 201) {
+              throw new Error(`Error registering user: ${formData.request.status}`);
+          }
+      } catch (error) {
+          console.error('Upload failed:', error);
+      }
     }
-    console.log('Email:', email);
-    console.log('Password:', password);
   };
   return (
     <div className="login-container">

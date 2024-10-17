@@ -30,8 +30,16 @@ function Upload() {
                     'Content-Type': 'multipart/json'
                 }
             });
+            const imageData = await axios.postForm('http://localhost:8000/images', {
+                post_id: 10,
+                image: fileInputRef //fs.createReadStream('/foo/bar.jpg') axios docs
+            },{
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
             console.log(formData.request);
-            if (formData.request.status != 201) {
+            if (formData.request.status != 201 && imageData.request.status != 201) {
                 throw new Error(`Error uploading file: ${formData.request.status}`);
              }
     

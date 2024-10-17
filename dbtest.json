@@ -176,5 +176,14 @@
             "comment_date": "04/12/24",
             "likes": 12443
         }
+    ],
+    "images": [
+        {
+            "post_id": 1,
+            "image": ""
+        }, {
+            "post_id": 2,
+            "image": ""
+        }
     ]
 }
