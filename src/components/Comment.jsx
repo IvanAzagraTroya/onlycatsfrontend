@@ -4,8 +4,8 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-import likeAnimationData from '/public/like-animation.json';
-import repeatAnimationData from '/public/repeat-animation.json';
+import likeAnimationData from '../assets/like-animation.json';
+import repeatAnimationData from '../assets/repeat-animation.json';
 import { Avatar } from '@mui/material';
 
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';

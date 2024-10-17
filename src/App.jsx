@@ -9,7 +9,7 @@ import Upload from './components/Upload';
 import useFetch from './utils/UseFetch';
 import Login from './components/Login';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-import loadCatPaw from '/public/cat-paw-load2.json';
+import loadCatPaw from './assets/cat-paw-load2.json';
 
 function App() {
   const [isFeedSelected, setIsFeedSelected] = useState(true);
@@ -51,32 +51,9 @@ function App() {
   const postsReady = posts.data;
   const activityReady = activity.data;
 
-  function handleFeedClick() {
-    setIsFeedSelected(true);
-    setIsProfileSelected(false);
-    setIsNotificationsSelected(false);
-    setIsPublishSelected(false);
-  }
-  function handleUserClick() {
-    setIsFeedSelected(false);
-    setIsProfileSelected(true);
-    setIsNotificationsSelected(false);
-    setIsPublishSelected(false);
-  }
-  function handleNotificationsClick() {
-    setIsFeedSelected(false);
-    setIsProfileSelected(false);
-    setIsNotificationsSelected(true);
-    setIsPublishSelected(false);
-  }
-  function handlePublishClick() {
-    setIsFeedSelected(false);
-    setIsProfileSelected(false);
-    setIsNotificationsSelected(false);
-    setIsPublishSelected(true);
-  }
   return (
     <div>
+      {location.reload}
       <h1 className="web-header">Onlycats <img src='src/assets/nyan-cat.gif'/></h1>
       <div className="container">
         <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />

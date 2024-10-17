@@ -1,16 +1,51 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PublishIcon from '@mui/icons-material/Publish';
 import './Upload.css'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-import uploadAnimationData from '/public/upload-animation.json';
+import uploadAnimationData from '../assets/upload-animation.json';
+import axios from 'axios';
 
 function Upload() {
     const fileInputRef = useRef(null);
     const [imagePreview, setImagePreview] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
+    const [descText, setDescText] = useState("");
+    const [uploadError, setUploadError] = useState(null);
 
-    const handleUploadClick = () => {
-        fileInputRef.current.click();
+    const handleUploadClick = async () => {
+        setIsUploading(true);
+        setUploadError(null);
+        //fileInputRef.current.click();
+
+        try{
+            const formData = await axios.post('http://localhost:8000/posts', {
+                id: 10,
+                owner_id: 1,
+                image_url: "",//fileInputRef.current.files[0], // cambiar esto una vez tenga el store de imágenes
+                text: descText,
+                post_date: new Date().now,
+                likes: 0 
+            },{
+                headers: {
+                    'Content-Type': 'multipart/json'
+                }
+            });
+            console.log(formData.request);
+            if (formData.request.status != 201) {
+                throw new Error(`Error uploading file: ${formData.request.status}`);
+             }
+    
+            // Handle successful upload (e.g., clear form, display success message)
+            console.log('Upload successful!');
+            setIsUploading(false);
+            setImagePreview(null);
+            setDescText('');
+        } catch (error) {
+            console.error('Upload failed:', error);
+            setUploadError(error.message);
+        } finally {
+            setIsUploading(false); // Ensure loading state is reset
+        }
     };
 
     const handleFileChange = (event) => {
@@ -28,15 +63,18 @@ function Upload() {
         }
       };
 
+      const hadnleDescriptionText = (event) => {
+        setDescText(event.target.value);
+      }
+
 
     return (
         <div className='upload-container'>
             <h1>Upload a File</h1>
-            <form action="http://localhost:8000/posts" method="POST" encType="multipart/form-data">
                 <input type="file" id="fileInput" 
                 ref={fileInputRef} onChange={handleFileChange} />
                 <br />
-                <textarea id="commentInput" />
+                <textarea id="commentInput" onChange={hadnleDescriptionText}/>
                 <br />
                 <button onClick={handleUploadClick}>
                     {isUploading ? (
@@ -49,11 +87,11 @@ function Upload() {
                         />
                     ):(<PublishIcon/>)}
                 </button>
-            </form>
             <div className='image-preview'>
                 {imagePreview && (
                 <img src={imagePreview} alt="Image Preview" style={{ aspectRatio: '1/1' }} />
                 )}
+                <h3>{descText}</h3>
             </div>
         </div>
     );

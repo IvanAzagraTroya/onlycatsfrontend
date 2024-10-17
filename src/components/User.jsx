@@ -28,7 +28,6 @@ function User(id, display_name, username, profile_picture, follower_number, foll
                     @{user.username}
                 </div>
                 <div className="user-stats">
-                    {/* User Stats like Followers, Following, Tweets */}
                     <div>
                         <h3>Posts</h3> {user.number_posts}
                     
@@ -40,20 +39,17 @@ function User(id, display_name, username, profile_picture, follower_number, foll
             </div>
             <div className="user-tweets">
             {!posts.isPending ? postsReady.map((post) => {
-                // Find the corresponding user in usersReady based on a common ID
-                
-                console.log(user);
-                // If a matching user is found, create the Post component
+                //console.log(user);
                 if (post.owner_id == user.id) {
                   return (
                     <Post
                       key={post.id}
-                      id={post.id} // Add a unique key for each Post component
+                      id={post.id}
                       owner_id = {user.id}
                       displayName={user.display_name} 
                       username={user.username} 
                       verified={user.verified} 
-                      text={"aaaaaaaaaaaaaaaaaaaasigueñaaaaaaaaaaaa"}
+                      text={post.text}
                       image={post.image_url} 
                       avatar={user.profile_picture} 
                       likes={post.likes}
@@ -64,21 +60,6 @@ function User(id, display_name, username, profile_picture, follower_number, foll
                   <h1>No posts</h1>
                   return null; 
                 }}) : (<h1>No posts available</h1>)}
-                {/* List of User's Tweets */}
-                {/* You can implement this using a map function to render each tweet */}
-                {/* Example: tweets.map((tweet) => <Tweet tweet={tweet} />) */}
-                {/* <Post displayName={"Test1"} username={"test_user"} verified={true} 
-                text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
-                image={'src/assets/react.svg'} avatar={'src/assets/hollow-heart.svg'}/>
-
-                Post 2
-                <Post displayName={"Test1"} username={"test_user"} verified={true} 
-                text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
-                image={'src/assets/react.svg'} avatar={'src/assets/hollow-heart.svg'}/>
-                Pos3
-                <Post displayName={"Test1"} username={"test_user"} verified={true} 
-                text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
-                image={'src/assets/react.svg'} avatar={'src/assets/hollow-heart.svg'}/> */}
             </div>
             </div>
           ):

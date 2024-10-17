@@ -1,15 +1,29 @@
 import React, { useState } from 'react';
-import './Login.css'; // Import your CSS file for styling
+import './Login.css'; 
+import axios from 'axios';
+
 function Login({onLoginSuccess}) {
   const userEmail = 'user@email.com';
   const userPassword = 'psw';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
   const handleLogin = () => {
     // Here, you would typically make an API call to your backend
     // to authenticate the user. For now, we'll just log the input.
-    console.log('Email:', email);
-    console.log('Password:', password);
+
+    try{
+      const log = axios.get('http://localhost:8000/users?email='+userEmail+'}')
+      .then(function(response){
+        if(response.status != 200){
+          throw new Error("Error in login");
+        }
+        console.log(response);
+      });
+    } catch(exception){
+      console.error(exception, response)
+    }
+
     // If authentication is successful, redirect to the main app.
     if(userEmail == email && userPassword == password){
       onLoginSuccess();

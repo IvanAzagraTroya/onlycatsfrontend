@@ -4,6 +4,7 @@
             "id": 1,
             "display_name": "ma display_name",
             "username": "ma username",
+            "email": "user1@email.com",
             "profile_picture": "./assets/hollow-heart.svg",
             "follower_number": 12345,
             "following_number": 54321,
@@ -13,6 +14,7 @@
             "id": 2,
             "display_name": "ma display_name 2",
             "username": "ma username 2",
+            "email": "user2@email.com",
             "profile_picture": "./assets/hollow-heart.svg",
             "follower_number": 12312,
             "following_number": 54321,
@@ -22,6 +24,7 @@
             "id": 3,
             "display_name": "ma display_name 3",
             "username": "ma username 3",
+            "email": "user3@email.com",
             "profile_picture": "./assets/hollow-heart.svg",
             "follower_number": 12,
             "following_number": 5421,
@@ -31,6 +34,7 @@
             "id": 4,
             "display_name": "ma display_name 4",
             "username": "ma username 4",
+            "email": "user4@email.com",
             "profile_picture": "./assets/hollow-heart.svg",
             "follower_number": 1234523,
             "following_number": 521,
@@ -40,6 +44,7 @@
             "id": 5,
             "display_name": "ma display_name 5",
             "username": "ma username 5",
+            "email": "user5@email.com",
             "profile_picture": "./assets/hollow-heart.svg",
             "follower_number": 1231,
             "following_number": 5,
@@ -51,56 +56,33 @@
             "id": 1,
             "owner_id": 1,
             "image_url": "../assets/react.svg",
-<<<<<<< Updated upstream
-            "post_date": "07/10/24",
-            "likes": 1234,
-            "dislikes": 2
-=======
             "text": "this is a test text 1",
             "post_date": "07/10/24",
             "likes": 1234
->>>>>>> Stashed changes
         },
         {
             "id": 2,
             "owner_id": 2,
             "image_url": "../assets/react.svg",
-<<<<<<< Updated upstream
-            "post_date": "08/10/24",
-            "likes": 12,
-            "dislikes": 112
-=======
             "text": "this is a test text 2",
             "post_date": "08/10/24",
             "likes": 12
->>>>>>> Stashed changes
         },
         {
             "id": 3,
             "owner_id": 3,
             "image_url": "../assets/react.svg",
-<<<<<<< Updated upstream
-            "post_date": "17/10/24",
-            "likes": 34,
-            "dislikes": 21
-=======
             "text": "this is a test text 3",
             "post_date": "17/10/24",
             "likes": 34
->>>>>>> Stashed changes
         },
         {
             "id": 4,
             "owner_id": 4,
             "image_url": "../assets/react.svg",
             "post_date": "27/10/24",
-<<<<<<< Updated upstream
-            "likes": 12345,
-            "dislikes": 20
-=======
             "text": "this is a test text 4",
             "likes": 12345
->>>>>>> Stashed changes
         }
     ],
     "activity": [
@@ -108,11 +90,7 @@
             "id": 1,
             "user_id": 1,
             "post_id": 1,
-<<<<<<< Updated upstream
-            "text": "",
-=======
             "text": "i want some patatas fritas",
->>>>>>> Stashed changes
             "reaction_type": "Like",
             "activity_date": "03/03/23"
         },
@@ -121,11 +99,7 @@
             "user_id": 2,
             "post_id": 2,
             "text": "",
-<<<<<<< Updated upstream
-            "reaction_type": "Disike",
-=======
             "reaction_type": "Like",
->>>>>>> Stashed changes
             "activity_date": "03/04/23"
         },
         {
@@ -165,74 +139,42 @@
         {
             "id": 1,
             "post_id": 1,
-<<<<<<< Updated upstream
-            "user_id": 1,
-            "content": "Este es un comentario de prueba 1",
-            "comment_date": "08/12/24",
-            "likes": 123,
-            "dislikes": 321
-=======
             "display_name":"ma display_name 1",
             "username":"ma username 1",
             "avatar": "",
             "content": "Este es un comentario de prueba 1",
             "comment_date": "08/12/24",
             "likes": 123
->>>>>>> Stashed changes
         },
         {
             "id": 2,
             "post_id": 2,
-<<<<<<< Updated upstream
-            "user_id": 2,
-            "content": "Este es un comentario de prueba 2",
-            "comment_date": "08/12/22",
-            "likes": 23,
-            "dislikes": 2321
-=======
             "display_name":"ma display_name 2",
             "username":"ma username 2",
             "avatar": "",
             "content": "Este es un comentario de prueba 2",
             "comment_date": "08/12/22",
             "likes": 23
->>>>>>> Stashed changes
         },
         {
             "id": 3,
             "post_id": 3,
-<<<<<<< Updated upstream
-            "user_id": 3,
-            "content": "Este es un comentario de prueba 3",
-            "comment_date": "03/01/23",
-            "likes": 1333,
-            "dislikes": 31
-=======
             "display_name":"ma display_name 3",
             "username":"ma username 3",
             "avatar": "",
             "content": "Este es un comentario de prueba 3",
             "comment_date": "03/01/23",
             "likes": 1333
->>>>>>> Stashed changes
         },
         {
             "id": 4,
             "post_id": 4,
-<<<<<<< Updated upstream
-            "user_id": 4,
-            "content": "Este es un comentario de prueba 4",
-            "comment_date": "04/12/24",
-            "likes": 12443,
-            "dislikes": 34421
-=======
             "display_name":"ma display_name 4",
             "username":"ma username 4",
             "avatar": "",
             "content": "Este es un comentario de prueba 4",
             "comment_date": "04/12/24",
             "likes": 12443
->>>>>>> Stashed changes
         }
     ]
 }
