@@ -32,7 +32,7 @@ function Upload() {
             });
             const imageData = await axios.postForm('http://localhost:8000/images', {
                 post_id: 10,
-                image: fileInputRef //fs.createReadStream('/foo/bar.jpg') axios docs
+                image: /*new Blob*/(fileInputRef) //fs.createReadStream('/foo/bar.jpg') axios docs
             },{
                 headers: {
                     'Content-Type': 'multipart/form-data'

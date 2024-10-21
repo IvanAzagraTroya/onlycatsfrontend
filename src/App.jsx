@@ -178,7 +178,6 @@ function App() {
           </>
           )}
         </div>
-        <div className='sugerence-column'></div>
       </div>
     </div>
   )

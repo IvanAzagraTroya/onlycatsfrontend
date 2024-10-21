@@ -26,3 +26,6 @@ https://www.freecodecamp.org/news/json-server-for-frontend-development/
 
 storage images in mongodb:
 String newFileName = "my-image"; File imageFile = new File("/users/victor/images/image.png"); GridFS gfsPhoto = new GridFS(db, "photo"); GridFSInputFile gfsFile = gfsPhoto.createFile(imageFile); gfsFile.setFilename(newFileName); gfsFile.save();
+
+json-server
+D:\repos\otro\front\onlycatsfrontend\node_modules\.bin

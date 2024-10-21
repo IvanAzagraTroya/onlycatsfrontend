@@ -1,189 +1,217 @@
 {
-    "users":[
-        {
-            "id": 1,
-            "display_name": "ma display_name",
-            "username": "ma username",
-            "email": "user1@email.com",
-            "profile_picture": "./assets/hollow-heart.svg",
-            "follower_number": 12345,
-            "following_number": 54321,
-            "number_posts": 10000            
-        },
-        {
-            "id": 2,
-            "display_name": "ma display_name 2",
-            "username": "ma username 2",
-            "email": "user2@email.com",
-            "profile_picture": "./assets/hollow-heart.svg",
-            "follower_number": 12312,
-            "following_number": 54321,
-            "number_posts": 1001            
-        },
-        {
-            "id": 3,
-            "display_name": "ma display_name 3",
-            "username": "ma username 3",
-            "email": "user3@email.com",
-            "profile_picture": "./assets/hollow-heart.svg",
-            "follower_number": 12,
-            "following_number": 5421,
-            "number_posts": 100            
-        },
-        {
-            "id": 4,
-            "display_name": "ma display_name 4",
-            "username": "ma username 4",
-            "email": "user4@email.com",
-            "profile_picture": "./assets/hollow-heart.svg",
-            "follower_number": 1234523,
-            "following_number": 521,
-            "number_posts": 10002            
-        },
-        {
-            "id": 5,
-            "display_name": "ma display_name 5",
-            "username": "ma username 5",
-            "email": "user5@email.com",
-            "profile_picture": "./assets/hollow-heart.svg",
-            "follower_number": 1231,
-            "following_number": 5,
-            "number_posts": 12            
-        }
-    ],
-    "posts":[
-        {
-            "id": 1,
-            "owner_id": 1,
-            "image_url": "../assets/react.svg",
-            "text": "this is a test text 1",
-            "post_date": "07/10/24",
-            "likes": 1234
-        },
-        {
-            "id": 2,
-            "owner_id": 2,
-            "image_url": "../assets/react.svg",
-            "text": "this is a test text 2",
-            "post_date": "08/10/24",
-            "likes": 12
-        },
-        {
-            "id": 3,
-            "owner_id": 3,
-            "image_url": "../assets/react.svg",
-            "text": "this is a test text 3",
-            "post_date": "17/10/24",
-            "likes": 34
-        },
-        {
-            "id": 4,
-            "owner_id": 4,
-            "image_url": "../assets/react.svg",
-            "post_date": "27/10/24",
-            "text": "this is a test text 4",
-            "likes": 12345
-        }
-    ],
-    "activity": [
-        {
-            "id": 1,
-            "user_id": 1,
-            "post_id": 1,
-            "text": "i want some patatas fritas",
-            "reaction_type": "Like",
-            "activity_date": "03/03/23"
-        },
-        {
-            "id": 2,
-            "user_id": 2,
-            "post_id": 2,
-            "text": "",
-            "reaction_type": "Like",
-            "activity_date": "03/04/23"
-        },
-        {
-            "id": 3,
-            "user_id": 3,
-            "post_id": 3,
-            "text": "I comment your noods",
-            "reaction_type": "Comment",
-            "activity_date": "03/03/24"
-        },
-        {
-            "id": 4,
-            "user_id": 4,
-            "post_id": 4,
-            "text": "",
-            "reaction_type": "Delete",
-            "activity_date": "03/12/24"
-        },
-        {
-            "id": 5,
-            "user_id": 5,
-            "post_id": 5,
-            "text": "Someone called noods followed ur noods",
-            "reaction_type": "Follow",
-            "activity_date": "13/03/24"
-        },
-        {
-            "id": 6,
-            "user_id": 6,
-            "post_id": 6,
-            "text": "Someone unfollowed ur noods :'(",
-            "reaction_type": "Unfollow",
-            "activity_date": "23/06/24"
-        }
-    ],
-    "comments": [
-        {
-            "id": 1,
-            "post_id": 1,
-            "display_name":"ma display_name 1",
-            "username":"ma username 1",
-            "avatar": "",
-            "content": "Este es un comentario de prueba 1",
-            "comment_date": "08/12/24",
-            "likes": 123
-        },
-        {
-            "id": 2,
-            "post_id": 2,
-            "display_name":"ma display_name 2",
-            "username":"ma username 2",
-            "avatar": "",
-            "content": "Este es un comentario de prueba 2",
-            "comment_date": "08/12/22",
-            "likes": 23
-        },
-        {
-            "id": 3,
-            "post_id": 3,
-            "display_name":"ma display_name 3",
-            "username":"ma username 3",
-            "avatar": "",
-            "content": "Este es un comentario de prueba 3",
-            "comment_date": "03/01/23",
-            "likes": 1333
-        },
-        {
-            "id": 4,
-            "post_id": 4,
-            "display_name":"ma display_name 4",
-            "username":"ma username 4",
-            "avatar": "",
-            "content": "Este es un comentario de prueba 4",
-            "comment_date": "04/12/24",
-            "likes": 12443
-        }
-    ],
-    "images": [
-        {
-            "post_id": 1,
-            "image": ""
-        }, {
-            "post_id": 2,
-            "image": ""
-        }
-    ]
+  "users": [
+    {
+      "id": "1",
+      "display_name": "ma display_name",
+      "username": "ma username",
+      "email": "user1@email.com",
+      "profile_picture": "./assets/hollow-heart.svg",
+      "follower_number": 12345,
+      "following_number": 54321,
+      "number_posts": 10000
+    },
+    {
+      "id": "2",
+      "display_name": "ma display_name 2",
+      "username": "ma username 2",
+      "email": "user2@email.com",
+      "profile_picture": "./assets/hollow-heart.svg",
+      "follower_number": 12312,
+      "following_number": 54321,
+      "number_posts": 1001
+    },
+    {
+      "id": "3",
+      "display_name": "ma display_name 3",
+      "username": "ma username 3",
+      "email": "user3@email.com",
+      "profile_picture": "./assets/hollow-heart.svg",
+      "follower_number": 12,
+      "following_number": 5421,
+      "number_posts": 100
+    },
+    {
+      "id": "4",
+      "display_name": "ma display_name 4",
+      "username": "ma username 4",
+      "email": "user4@email.com",
+      "profile_picture": "./assets/hollow-heart.svg",
+      "follower_number": 1234523,
+      "following_number": 521,
+      "number_posts": 10002
+    },
+    {
+      "id": "5",
+      "display_name": "ma display_name 5",
+      "username": "ma username 5",
+      "email": "user5@email.com",
+      "profile_picture": "./assets/hollow-heart.svg",
+      "follower_number": 1231,
+      "following_number": 5,
+      "number_posts": 12
+    },
+    {
+      "id": 10,
+      "display_name": "emailpatata@sd.com",
+      "username": "@emailpatata@sd.com",
+      "profile_picture": "",
+      "follower_number": 0,
+      "following_number": 0,
+      "number_posts": 0
+    },
+    {
+      "id": 10,
+      "display_name": "emailpatata@sd.com",
+      "username": "@emailpatata@sd.com",
+      "profile_picture": "",
+      "follower_number": 0,
+      "following_number": 0,
+      "number_posts": 0
+    }
+  ],
+  "posts": [
+    {
+      "id": "1",
+      "owner_id": 1,
+      "image_url": "../assets/react.svg",
+      "text": "this is a test text 1",
+      "post_date": "07/10/24",
+      "likes": 1234
+    },
+    {
+      "id": "2",
+      "owner_id": 2,
+      "image_url": "../assets/react.svg",
+      "text": "this is a test text 2",
+      "post_date": "08/10/24",
+      "likes": 12
+    },
+    {
+      "id": "3",
+      "owner_id": 3,
+      "image_url": "../assets/react.svg",
+      "text": "this is a test text 3",
+      "post_date": "17/10/24",
+      "likes": 34
+    },
+    {
+      "id": "4",
+      "owner_id": 4,
+      "image_url": "../assets/react.svg",
+      "post_date": "27/10/24",
+      "text": "this is a test text 4",
+      "likes": 12345
+    },
+    {
+      "id": 10,
+      "owner_id": 1,
+      "image_url": "",
+      "text": "jndaksjnkdasc",
+      "likes": 0
+    }
+  ],
+  "activity": [
+    {
+      "id": "1",
+      "user_id": 1,
+      "post_id": 1,
+      "text": "i want some patatas fritas",
+      "reaction_type": "Like",
+      "activity_date": "03/03/23"
+    },
+    {
+      "id": "2",
+      "user_id": 2,
+      "post_id": 2,
+      "text": "",
+      "reaction_type": "Like",
+      "activity_date": "03/04/23"
+    },
+    {
+      "id": "3",
+      "user_id": 3,
+      "post_id": 3,
+      "text": "I comment your noods",
+      "reaction_type": "Comment",
+      "activity_date": "03/03/24"
+    },
+    {
+      "id": "4",
+      "user_id": 4,
+      "post_id": 4,
+      "text": "",
+      "reaction_type": "Delete",
+      "activity_date": "03/12/24"
+    },
+    {
+      "id": "5",
+      "user_id": 5,
+      "post_id": 5,
+      "text": "Someone called noods followed ur noods",
+      "reaction_type": "Follow",
+      "activity_date": "13/03/24"
+    },
+    {
+      "id": "6",
+      "user_id": 6,
+      "post_id": 6,
+      "text": "Someone unfollowed ur noods :'(",
+      "reaction_type": "Unfollow",
+      "activity_date": "23/06/24"
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "post_id": 1,
+      "display_name": "ma display_name 1",
+      "username": "ma username 1",
+      "avatar": "",
+      "content": "Este es un comentario de prueba 1",
+      "comment_date": "08/12/24",
+      "likes": 123
+    },
+    {
+      "id": "2",
+      "post_id": 2,
+      "display_name": "ma display_name 2",
+      "username": "ma username 2",
+      "avatar": "",
+      "content": "Este es un comentario de prueba 2",
+      "comment_date": "08/12/22",
+      "likes": 23
+    },
+    {
+      "id": "3",
+      "post_id": 3,
+      "display_name": "ma display_name 3",
+      "username": "ma username 3",
+      "avatar": "",
+      "content": "Este es un comentario de prueba 3",
+      "comment_date": "03/01/23",
+      "likes": 1333
+    },
+    {
+      "id": "4",
+      "post_id": 4,
+      "display_name": "ma display_name 4",
+      "username": "ma username 4",
+      "avatar": "",
+      "content": "Este es un comentario de prueba 4",
+      "comment_date": "04/12/24",
+      "likes": 12443
+    }
+  ],
+  "images": [
+    {
+      "post_id": 1,
+      "image": "",
+      "id": "0fab"
+    },
+    {
+      "post_id": 2,
+      "image": "",
+      "id": "0c10"
+    }
+  ]
 }
