@@ -52,8 +52,8 @@ const Comment = ({ commentText, avatar, displayName, username, date, likes }) =>
     setIsTextClicked(!textClicked);
   }
 
-  const comments = useFetch('http://localhost:8000/comments')
-  const activity = useFetch('http://localhost:8000/activity')
+  const comments = useFetch('http://localhost:8000/onlycats/comments')
+  const activity = useFetch('http://localhost:8000/onlycats/interactions')
   const commentsReady = comments.data;
   const activityReady = activity.data;
   

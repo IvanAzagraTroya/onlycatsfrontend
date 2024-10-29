@@ -29,3 +29,5 @@ String newFileName = "my-image"; File imageFile = new File("/users/victor/images
 
 json-server
 D:\repos\otro\front\onlycatsfrontend\node_modules\.bin
+
+Falta por terminar la subida de imágenes y store del usuario que se está utilizando para hacer las busquedas de posts del perfil e interacciones con otras publicaciones.

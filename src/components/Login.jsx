@@ -11,7 +11,7 @@ function Login({onLoginSuccess}) {
   const handleLogin = async () => {
     //Get user for login once i have the waypoint done, doesn't work on json-server
     try{
-      const log = await axios.get('http://localhost:8000/users?email='+userEmail+'}')
+      const log = await axios.get('http://localhost:8000/onlycats/users?email='+userEmail+'}')
       .then(function(response){
         if(response.status != 200){
           throw new Error("Error in login");
@@ -42,7 +42,7 @@ function Login({onLoginSuccess}) {
       console.log("Error with email");
     }else {
       try{
-        const formData = await axios.post('http://localhost:8000/users', {
+        const formData = await axios.post('http://localhost:8000/onlycats/users', {
             id: 10,
             display_name: email,
             username: "@"+email,

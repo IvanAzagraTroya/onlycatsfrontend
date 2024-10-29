@@ -18,7 +18,7 @@ function Upload() {
         //fileInputRef.current.click();
 
         try{
-            const formData = await axios.post('http://localhost:8000/posts', {
+            const formData = await axios.post('http://localhost:8000/onlycats/posts', {
                 id: 10,
                 owner_id: 1,
                 image_url: "",//fileInputRef.current.files[0], // cambiar esto una vez tenga el store de imágenes
@@ -30,7 +30,7 @@ function Upload() {
                     'Content-Type': 'multipart/json'
                 }
             });
-            const imageData = await axios.postForm('http://localhost:8000/images', {
+            const imageData = await axios.postForm('http://localhost:8000/onlycats/images', {
                 post_id: 10,
                 image: /*new Blob*/(fileInputRef) //fs.createReadStream('/foo/bar.jpg') axios docs
             },{

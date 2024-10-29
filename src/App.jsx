@@ -43,9 +43,9 @@ function App() {
     setIsPublishSelected(true);
   }
 
-  const users = useFetch('http://localhost:8000/users')
-  const posts = useFetch('http://localhost:8000/posts')
-  const activity = useFetch('http://localhost:8000/activity')
+  const users = useFetch('http://localhost:8000/onlycats/users')
+  const posts = useFetch('http://localhost:8000/onlycats/posts')
+  const activity = useFetch('http://localhost:8000/onlycats/interactions')
 
   const usersReady = users.data;
   const postsReady = posts.data;

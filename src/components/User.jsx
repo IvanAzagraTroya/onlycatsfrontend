@@ -4,8 +4,8 @@ import Post from '../components/Post'
 import useFetch from '../utils/UseFetch';
 
 function User(id, display_name, username, profile_picture, follower_number, following_number, number_posts) {
-    const users = useFetch('http://localhost:8000/users')
-    const posts = useFetch('http://localhost:8000/posts')
+    const users = useFetch('http://localhost:8000/onlycats/users')
+    const posts = useFetch('http://localhost:8000/onlycats/posts')
     var usersReady;
     var user;
     if(!users.isPending){
