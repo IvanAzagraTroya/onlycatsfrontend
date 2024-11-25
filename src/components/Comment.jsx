@@ -13,7 +13,7 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import React, {useState, useRef, useEffect} from 'react';
 import useFetch from '../utils/UseFetch';
 
-const Comment = ({ commentText, avatar, displayName, username, date, likes }) => {
+const Comment = ({ id, content, avatar, displayName, username, commentDate, likes, postId, userId }) => {
 
   const [isLiked, setIsLiked] = useState(false);
   const animationRef = useRef(null);
@@ -24,9 +24,8 @@ const Comment = ({ commentText, avatar, displayName, username, date, likes }) =>
   var trimmedComment = "";
 
   var currentLikes = likes;
-  if(commentText.length > 100) {
-    trimmedComment = commentText.substring(0, 100);
-  }else {trimmedComment = commentText}
+  if(content == undefined) content = "";
+  trimmedComment = content.length >= 100 ? content.substring(0, 50) + ' ...' : content;
 
   const handleLike = () => {
     setIsLiked(!isLiked);
@@ -70,21 +69,17 @@ const Comment = ({ commentText, avatar, displayName, username, date, likes }) =>
             </h3>
           </div>
         </div>
-        <div className="comment_text">
-          <div className="comment_content">
-            <div className={`comment_content ${textClicked ? 'expanded' : ''}`} onClick={handleExpandText}>
-            {textClicked ?  (
-              (commentText)
-            ) : 
-            (
-              <>
-                {trimmedComment} <b> more... </b>
-              </>
-            )}
-            </div>
-          </div>
+        <div className="comment_text"> 
+          <div className="comment_content" onClick={handleExpandText}> 
+            <div className={`comment_content ${textClicked ? 'expanded' : ''}`}> 
+              {textClicked ? content : 
+              ( <>
+               {trimmedComment}</> 
+              )} 
+            </div> 
+          </div> 
         </div>
-        <p>date: {date}</p>
+        <p>date: {commentDate.split(' ')[0]}</p>
         <div className='comment_buttons'>
             <button className='fav_button' onClick={handleLike}>
             {isLiked ? ( 
@@ -93,7 +88,7 @@ const Comment = ({ commentText, avatar, displayName, username, date, likes }) =>
                     data={likeAnimationData} 
                     speed={1.5}
                     loop={false} // Ensure animation plays only once
-                    style={{ width: '20px', height: '20px', left:'5pxº', position:'relative', scale: '2' }} // Adjust size as needed
+                    style={{ width: '20px', height: '20px', left:'5px', position:'relative', scale: '2' }} // Adjust size as needed
                   />
                  ) : (
                   <FavoriteBorderIcon fontSize="small" />

@@ -1,4 +1,4 @@
-import React, {useState, useRef, useParams, useCallback} from 'react';
+import React, {useState, useRef, useParams, useCallback, useEffect} from 'react';
 import './Post.css';
 import { Avatar } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
@@ -11,13 +11,41 @@ import loadCatPaw from '../assets/cat-paw-load2.json';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import Comment from '../components/Comment.jsx';
 import useFetch from '../utils/UseFetch';
+import axios from 'axios';
+import getCookie from '../utils/GetCoockie';
+import decodeJwt from '../utils/DecodeJwt';
 
 function Post({ id, owner_id, displayName, username, verified, text, image, avatar, likes, date }) {
 
+  const jwt = getCookie('jwt');
+  const userToken = jwt ? decodeJwt(jwt) : null;
+
   const [isLiked, setIsLiked] = useState(false);
+  const [likess, setLikes] = useState(0);
   const animationRef = useRef(null);
 
   const [isClicked, setIsClicked] = useState(false);
+  const [postImage, setPostImage] = useState('');
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        //console.log(image);
+        if(image != ""){
+          //var uri = encodeURI(image);
+          const response = await axios.get('http://localhost:8000/onlycats/posts/image?ImageUrl=' + image, {
+            responseType: 'blob'
+          });
+          //console.log("Image blob data: ", response.data);
+          const imageBlob = URL.createObjectURL(response.data);
+          setPostImage(imageBlob);
+        }
+      } catch(error) {
+        console.error('Error fetching post image: ', error)
+      }
+    };
+    fetchImage();
+  }, [image]);
 
   const handleLike = () => {
     setIsLiked(!isLiked);
@@ -26,6 +54,14 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
     }else if(isLiked && animationRef.current){
       animationRef.current.stop();
     }
+    const response = axios.put('http://localhost:8000/onlycats/posts/update_likes/'+id, isLiked, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwt}`
+      }
+    });
+    console.log(response.data)
+    setLikes(response.data.likeNumber);
   }
 
   const handleClick = () => {
@@ -37,8 +73,7 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
     }
   }
 
-  const comments = useFetch('http://localhost:8000/comments')
-  const activity = useFetch('http://localhost:8000/activity')
+  const comments = useFetch('http://localhost:8000/onlycats/comments/post/'+id)
   const commentsReady = comments.data;
 
   return (
@@ -60,7 +95,7 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
       <br/>
       <div className="post_body">
         <div className='image-container'>
-              <img width="100%" src={image} alt="image" className='post_image'/>
+              <img width="100%" src={postImage} alt="image" className='post_image'/>
         </div>
         <div className="post_footer">
           <div className='footer_buttons'>
@@ -108,18 +143,24 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
         </div>
         <div className='comment_reponse'>
         { !comments.isPending ? (
-            commentsReady.filter(comment => comment.post_id === parseInt(id))
+          commentsReady != null? (
+            commentsReady.filter(comment => comment.postId == id)
              .map((comment) => ( 
                <Comment 
-                commentId={comment.id} 
-                commentText={comment.content} 
-                displayName={comment.display_name} 
-                username={comment.username} 
-                avatar={comment.avatar}
-                date = {comment.comment_date}
-                likes = {comment.likes}
+               key={comment.id}
+               commentId={comment.id}
+               postId={comment.postId} 
+               userId={comment.userId}
+               content={comment.content} 
+               displayName={comment.displayname} 
+               username={comment.username} 
+               commentDate = {comment.commentDate}
+               likes = {comment.likes}
               />
             ))
+          ) : (
+            <i style={{color: 'gray'}}>There are no comments yet</i>
+          )
           ) : (
           <>
             {(comments.isPending) ? (

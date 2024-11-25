@@ -3,67 +3,59 @@ import './Login.css';
 import axios from 'axios';
 
 function Login({onLoginSuccess}) {
-  const userEmail = 'new@email.com';
-  const userPassword = 'psw';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
   const handleLogin = async () => {
     //Get user for login once i have the waypoint done, doesn't work on json-server
     try{
-      const log = await axios.get('http://localhost:8000/onlycats/users?email='+userEmail+'}')
+      axios.post('http://localhost:8000/onlycats/login', {
+        email: email,
+        password: password
+      })
       .then(function(response){
         if(response.status != 200){
           throw new Error("Error in login");
         }
-
-        //Until i have the users waypoint and db
-        response.data.forEach(element => {
-          if(element.email == email){
-            onLoginSuccess();
-            console.log("Logged in");
-          }
-        });
-        
-        console.log(response);
+        const token = response.data; 
+        document.cookie = `jwt=${token}; path=/; domain=localhost`; 
+        //console.log("Logged in", token);
+        onLoginSuccess();
       });
     } catch(exception){
       console.error(exception, response)
-    }
-
-    if(userEmail == email && userPassword == password){
-      onLoginSuccess();
-      console.log("Logged in succesfully")
     }
   };
   const handleRegister = async () => {
     const emailPattern = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$/;
     if(email.length == 0 || !emailPattern.test(email)){
-      console.log("Error with email");
+      //console.log("Error with email");
     }else {
       try{
-        const formData = await axios.post('http://localhost:8000/onlycats/users', {
-            id: 10,
-            display_name: email,
+        await axios.post('http://localhost:8000/onlycats/register', {
+            displayname: email,
             username: "@"+email,
-            profile_picture: "",
-            follower_number: 0,
-            following_number: 0,
-            number_posts: 0
-          },{
-              headers: {
-                  'Content-Type': 'multipart/json',
-                  //'Authorization': 
-              }
+            email: email,
+            password: password
+          }).then(function(response){
+            if(response.status != 204) throw new Error("Error while registering")
+              axios.post('http://localhost:8000/onlycats/login', {
+                email: email,
+                password: password
+              }).then(function(response){
+                if(response.status != 200)
+                  throw new Error("Error while login after register");
+                const token = response.data.token; 
+                document.cookie = `jwt=${token}; path=/; secure; HttpOnly`; 
+                console.log("Registered and Logged in", response.data);
+                onLoginSuccess();
+              });
           });
-          if (formData.status != 201) {
-              throw new Error(`Error registering user: ${formData.request.status}`);
-          }
       } catch (error) {
-          console.error('Upload failed:', error);
+          console.error('Register failed:', error);
       }
     }
   };
+
   return (
     <div className="login-container">
       <h2>Welcome to Onlycats!</h2>

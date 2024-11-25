@@ -10,13 +10,18 @@ import useFetch from './utils/UseFetch';
 import Login from './components/Login';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import loadCatPaw from './assets/cat-paw-load2.json';
+import getCookie from './utils/GetCoockie';
+import decodeJwt from './utils/DecodeJwt';
 
 function App() {
-  const [isFeedSelected, setIsFeedSelected] = useState(true);
-  const [isProfileSelected, setIsProfileSelected] = useState(false);
+  const [isFeedSelected, setIsFeedSelected] = useState(false);
+  const [isProfileSelected, setIsProfileSelected] = useState(true);
   const [isNotificationsSelected, setIsNotificationsSelected] = useState(false);
   const [isPublishSelected, setIsPublishSelected] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
+
+  const jwt = getCookie('jwt');
+  const userToken = jwt ? decodeJwt(jwt) : null;
 
   function handleFeedClick() {
     setIsFeedSelected(true);
@@ -25,18 +30,21 @@ function App() {
     setIsPublishSelected(false);
   }
   function handleUserClick() {
+    jwt ? setIsLogged(true) : null
     setIsFeedSelected(false);
     setIsProfileSelected(true);
     setIsNotificationsSelected(false);
     setIsPublishSelected(false);
   }
   function handleNotificationsClick() {
+    jwt ? setIsLogged(true) : null
     setIsFeedSelected(false);
     setIsProfileSelected(false);
     setIsNotificationsSelected(true);
     setIsPublishSelected(false);
   }
   function handlePublishClick() {
+    jwt ? setIsLogged(true) : null
     setIsFeedSelected(false);
     setIsProfileSelected(false);
     setIsNotificationsSelected(false);
@@ -54,16 +62,18 @@ function App() {
   return (
     <div>
       {location.reload}
-      <h1 className="web-header">Onlycats <img src='src/assets/nyan-cat.gif'/></h1>
+      {/* <h1 className="web-header">Onlycats <img src='src/assets/nyan-cat.gif'/></h1> */}
       <div className="container">
-        <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
-        <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
-        <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
-        <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
-        <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
-        <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
-        <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
-        <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+        {/* <div>
+          <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+          <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+          <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+          <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+          <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+          <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+          <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+          <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+        </div> */}
 
         <div className="menu-column">
           <button className="menu-button" onClick={handleUserClick}>
@@ -85,7 +95,8 @@ function App() {
             <div className='content-container'>
               {postsReady.map((post) => {
                 const user = usersReady.find((user) =>
-                  user.id == post.owner_id
+                  user.id == post.owner_id,
+                //console.log(post)
                 );
                 if (user) {
                   return (
@@ -96,7 +107,8 @@ function App() {
                       username={user.username}
                       verified={user.verified}
                       text={post.text}
-                      image={post.image_url}
+                      image={post.imageUrl}
+                      likes={post.likeNumber}
                       avatar={user.profile_picture}
                     />
                   );
