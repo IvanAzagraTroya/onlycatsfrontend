@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Post from './components/Post';
 import { AccountCircleRounded, Home, NotificationsRounded } from '@mui/icons-material';
 import PublishIcon from '@mui/icons-material/Publish';
@@ -12,25 +12,64 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import loadCatPaw from './assets/cat-paw-load2.json';
 import getCookie from './utils/GetCoockie';
 import decodeJwt from './utils/DecodeJwt';
+import axios from 'axios';
 
 function App() {
-  const [isFeedSelected, setIsFeedSelected] = useState(true);
-  const [isProfileSelected, setIsProfileSelected] = useState(false);
+  const [isFeedSelected, setIsFeedSelected] = useState(false);
+  const [isProfileSelected, setIsProfileSelected] = useState(true);
   const [isNotificationsSelected, setIsNotificationsSelected] = useState(false);
   const [isPublishSelected, setIsPublishSelected] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
-  const [userData, setUserData] = useState();
-  const [postInteractions, setPostInteractions] = useState([])
+  const [jwt, setJwt] = useState();
+  const [userToken, setUserToken] = useState();
+  const [user, setUser] = useState();
+  const [interactions, setInteractions] = useState([]);
 
-  const jwt = getCookie('jwt');
-  const userToken = jwt ? decodeJwt(jwt) : null;
+  useEffect(() => {
+    const cookieJwt = getCookie('jwt');
+    if (cookieJwt) {
+      setJwt(cookieJwt);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (jwt || user == undefined) {
+      handleLogin();
+    }
+  }, [jwt]);
+
+  const handleLogin = async () => {
+    console.log("inside handle login");
+    if (jwt) {
+      console.log(jwt);
+      const token = decodeJwt(jwt);
+      console.log(token);
+      setUserToken(token);
+
+      if (token) {
+        try {
+          const logUser = await axios.get(`http://localhost:8000/onlycats/user/${token.userId}`, {
+            headers: {
+              'Authorization': `Bearer ${jwt}`
+            }
+          });
+          if (logUser) {
+            setUser(logUser.data);
+            setIsLogged(true);
+            console.log(logUser.data);
+          }
+        } catch (error) {
+          console.error('Error logging in:', error);
+        }
+      }
+    }
+  }
 
   function handleFeedClick() {
     setIsFeedSelected(true);
     setIsProfileSelected(false);
     setIsNotificationsSelected(false);
     setIsPublishSelected(false);
-    location.reload
   }
   function handleUserClick() {
     jwt ? setIsLogged(true) : null
@@ -38,32 +77,13 @@ function App() {
     setIsProfileSelected(true);
     setIsNotificationsSelected(false);
     setIsPublishSelected(false);
-    location.reload
-    if(isLogged){
-      var user = useFetch('http://localhost:8000/onlycats/user/'+userToken.userId);
-      if(!user.isPending) setUserData(user.data)
-        console.log(userData);
-    }
   }
-  async function handleNotificationsClick() {
+  function handleNotificationsClick() {
     jwt ? setIsLogged(true) : null
-    var userPosts;
-    if(isLogged)
-      userPosts = await useFetch('http://localhost:8000/onlycats/posts/ids?id='+userToken.userId).data
-    if(userPosts != undefined){
-      userPosts.forEach(pId => {
-        var ids = useFetch('http://localhost:8081/api/interactions/post/'+pId)
-        if(!ids.isPending)
-          setPostInteractions(ids.data);
-      });
-      console.log(postInteractions)
-    }
     setIsFeedSelected(false);
     setIsProfileSelected(false);
     setIsNotificationsSelected(true);
     setIsPublishSelected(false);
-    setPostInteractions();
-    location.reload
   }
   function handlePublishClick() {
     jwt ? setIsLogged(true) : null
@@ -71,8 +91,36 @@ function App() {
     setIsProfileSelected(false);
     setIsNotificationsSelected(false);
     setIsPublishSelected(true);
-    location.reload
   }
+
+  const fetchInteractionsData = async () => {
+    try {
+      const postsInteractions = await axios.get(`http://localhost:8000/onlycats/posts/ids?id=${user.userId}`, {
+        headers: {
+          'Authorization': `Bearer ${jwt}`
+        }
+      });
+  
+      console.log(postsInteractions);
+  
+      const interactionPromises = postsInteractions.data.map(id => 
+        axios.get(`http://localhost:8000/onlycats/interactions/${id}`, {
+          headers: {
+            'Authorization': `Bearer ${jwt}`
+          }
+        })
+      );
+  
+      const interactionResponses = await Promise.all(interactionPromises);
+      const interactionsArray = interactionResponses.map(response => response.data);
+  
+      setInteractions(interactionsArray);
+      console.log(interactionsArray)
+      console.log(interactions)
+    } catch (error) {
+      console.error('Error fetching interactions:', error);
+    }
+  };
 
   const users = useFetch('http://localhost:8000/onlycats/users')
   const posts = useFetch('http://localhost:8000/onlycats/posts')
@@ -84,6 +132,7 @@ function App() {
 
   return (
     <div>
+      {location.reload}
       {/* <h1 className="web-header">Onlycats <img src='src/assets/nyan-cat.gif'/></h1> */}
       <div className="container">
         {/* <div>
@@ -118,7 +167,6 @@ function App() {
               {postsReady.map((post) => {
                 const user = usersReady.find((user) =>
                   user.id == post.owner_id,
-                //console.log(post)
                 );
                 if (user) {
                   return (
@@ -153,36 +201,22 @@ function App() {
           )}
           {isLogged ? (
             <div>
-              {isProfileSelected && !users.isPending && userData != undefined ? (
+              {isProfileSelected && !users.isPending ? (
                 <div className='content-container'>
-                  <User 
-                  id={userData.userId} 
-                  display_name={userData.displayName}
-                  username={userData.userName}
-                  profile_picture={userData.profilePicture}
-                  follower_number={userData.followeNum}
-                  following_number={userData.followingNum}
-                  number_posts={userData.postNum}
-                  isVerified={userData.isVerified}
-                  />
+                  <User />
                 </div>
               ): (
                 <>
-                {users.isPending && isLogged ? (null
-                ):(null)
-                }
+                {users.isPending && isLogged ? (null):(null)}
                 </>
               )}
-              {isNotificationsSelected && !activity.isPending? (
+              {isNotificationsSelected ? (
                 <div className='content-container'>
-
-                {!activity.isPending ? (
-                  activityReady.filter(activity => usersReady[2].id == activity.user_id)
-                  .map((activity) => (
-                    <Notification avatar={usersReady[2].profile_picture} display_name={usersReady[2].display_name} post_id={activity.post_id}
+                  {console.log(fetchInteractionsData())}
+                { interactions != undefined ? (
+                    <Notification key={activity.id} avatar={usersReady[2].profile_picture} display_name={usersReady[2].display_name} post_id={activity.post_id}
                     user_id={usersReady[2].id} text={activity.text} reaction_type={activity.reaction_type} activity_date={activity.activity_date}/>
-                  ))
-                ): ( (isLogged && activity.isPending) ? (
+                ): ( (isLogged && interactions == undefined) ? (
                   null
                 ) : (null)
                 )}
@@ -198,8 +232,8 @@ function App() {
             </div>
           ):(
             <>
-            {!isFeedSelected && !isLogged ? (
-              <Login onLoginSuccess={() => setIsLogged(true)}/>
+            {!isFeedSelected ? (
+              <Login onLoginSuccess={ handleLogin }/>
             ): (null)
           }
           </>
