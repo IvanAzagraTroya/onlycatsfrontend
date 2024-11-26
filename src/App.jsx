@@ -14,11 +14,13 @@ import getCookie from './utils/GetCoockie';
 import decodeJwt from './utils/DecodeJwt';
 
 function App() {
-  const [isFeedSelected, setIsFeedSelected] = useState(false);
-  const [isProfileSelected, setIsProfileSelected] = useState(true);
+  const [isFeedSelected, setIsFeedSelected] = useState(true);
+  const [isProfileSelected, setIsProfileSelected] = useState(false);
   const [isNotificationsSelected, setIsNotificationsSelected] = useState(false);
   const [isPublishSelected, setIsPublishSelected] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
+  const [userData, setUserData] = useState();
+  const [postInteractions, setPostInteractions] = useState([])
 
   const jwt = getCookie('jwt');
   const userToken = jwt ? decodeJwt(jwt) : null;
@@ -28,6 +30,7 @@ function App() {
     setIsProfileSelected(false);
     setIsNotificationsSelected(false);
     setIsPublishSelected(false);
+    location.reload
   }
   function handleUserClick() {
     jwt ? setIsLogged(true) : null
@@ -35,13 +38,32 @@ function App() {
     setIsProfileSelected(true);
     setIsNotificationsSelected(false);
     setIsPublishSelected(false);
+    location.reload
+    if(isLogged){
+      var user = useFetch('http://localhost:8000/onlycats/user/'+userToken.userId);
+      if(!user.isPending) setUserData(user.data)
+        console.log(userData);
+    }
   }
-  function handleNotificationsClick() {
+  async function handleNotificationsClick() {
     jwt ? setIsLogged(true) : null
+    var userPosts;
+    if(isLogged)
+      userPosts = await useFetch('http://localhost:8000/onlycats/posts/ids?id='+userToken.userId).data
+    if(userPosts != undefined){
+      userPosts.forEach(pId => {
+        var ids = useFetch('http://localhost:8081/api/interactions/post/'+pId)
+        if(!ids.isPending)
+          setPostInteractions(ids.data);
+      });
+      console.log(postInteractions)
+    }
     setIsFeedSelected(false);
     setIsProfileSelected(false);
     setIsNotificationsSelected(true);
     setIsPublishSelected(false);
+    setPostInteractions();
+    location.reload
   }
   function handlePublishClick() {
     jwt ? setIsLogged(true) : null
@@ -49,6 +71,7 @@ function App() {
     setIsProfileSelected(false);
     setIsNotificationsSelected(false);
     setIsPublishSelected(true);
+    location.reload
   }
 
   const users = useFetch('http://localhost:8000/onlycats/users')
@@ -61,7 +84,6 @@ function App() {
 
   return (
     <div>
-      {location.reload}
       {/* <h1 className="web-header">Onlycats <img src='src/assets/nyan-cat.gif'/></h1> */}
       <div className="container">
         {/* <div>
@@ -131,19 +153,22 @@ function App() {
           )}
           {isLogged ? (
             <div>
-              {isProfileSelected && !users.isPending ? (
+              {isProfileSelected && !users.isPending && userData != undefined ? (
                 <div className='content-container'>
-                  <User />
+                  <User 
+                  id={userData.userId} 
+                  display_name={userData.displayName}
+                  username={userData.userName}
+                  profile_picture={userData.profilePicture}
+                  follower_number={userData.followeNum}
+                  following_number={userData.followingNum}
+                  number_posts={userData.postNum}
+                  isVerified={userData.isVerified}
+                  />
                 </div>
               ): (
                 <>
                 {users.isPending && isLogged ? (null
-                  // <DotLottieReact
-                  // autoplay={true}
-                  // data={loadCatPaw}
-                  // speed={1}
-                  // loop={true}
-                  // />
                 ):(null)
                 }
                 </>
@@ -159,18 +184,8 @@ function App() {
                   ))
                 ): ( (isLogged && activity.isPending) ? (
                   null
-                  // <DotLottieReact
-                  //   autoplay={true}
-                  //   data={loadCatPaw}
-                  //   speed={1}
-                  //   loop={true}
-                  //   />
                 ) : (null)
                 )}
-                  {/* <Notification displayName="name-notification1" text="somebody liked ur noods" type="like" />
-                  <Notification displayName="name-notification2" text="somebody shared ur noods" type="shared" />
-                  <Notification displayName="name-notification3" text="somebody disliked ur noods" type="dislike" />
-                  <Notification displayName="name-notification4" text="somebody liked ur noods" type="like" /> */}
                 </div>
               ): (
                 null
@@ -183,7 +198,7 @@ function App() {
             </div>
           ):(
             <>
-            {!isFeedSelected ? (
+            {!isFeedSelected && !isLogged ? (
               <Login onLoginSuccess={() => setIsLogged(true)}/>
             ): (null)
           }

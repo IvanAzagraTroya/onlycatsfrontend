@@ -6,7 +6,7 @@ import axios from 'axios';
 import getCookie from '../utils/GetCoockie';
 import decodeJwt from '../utils/DecodeJwt';
 
-function User({ id, display_name, username, profile_picture, follower_number, following_number, number_posts }) {
+function User({ id, display_name, username, profile_picture, follower_number, following_number, number_posts, isVerified }) {
   const jwt = getCookie('jwt');
   const userToken = jwt ? decodeJwt(jwt) : null;
   const [posts, setPosts] = useState([]);

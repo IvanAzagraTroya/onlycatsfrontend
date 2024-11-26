@@ -16,7 +16,6 @@ import getCookie from '../utils/GetCoockie';
 import decodeJwt from '../utils/DecodeJwt';
 
 function Post({ id, owner_id, displayName, username, verified, text, image, avatar, likes, date }) {
-
   const jwt = getCookie('jwt');
   const userToken = jwt ? decodeJwt(jwt) : null;
 
@@ -27,166 +26,195 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
   const [isClicked, setIsClicked] = useState(false);
   const [postImage, setPostImage] = useState('');
 
+  const [textAreaContent, setTextAreaContent] = useState('');
+  const [comments, setComments] = useState([]); // State for comments
+  const [loadingComments, setLoadingComments] = useState(true);
+
+  const handleTextAreaChange = (event) => {
+    setTextAreaContent(event.target.value);
+  };
+
   useEffect(() => {
     const fetchImage = async () => {
       try {
-        //console.log(image);
-        if(image != ""){
-          //var uri = encodeURI(image);
+        if (image !== "") {
           const response = await axios.get('http://localhost:8000/onlycats/posts/image?ImageUrl=' + image, {
             responseType: 'blob'
           });
-          //console.log("Image blob data: ", response.data);
           const imageBlob = URL.createObjectURL(response.data);
           setPostImage(imageBlob);
         }
-      } catch(error) {
-        console.error('Error fetching post image: ', error)
+      } catch (error) {
+        console.error('Error fetching post image: ', error);
       }
     };
     fetchImage();
   }, [image]);
 
-  const handleLike = () => {
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/onlycats/comments/post/' + id);
+        setComments(response.data);
+        setLoadingComments(false);
+      } catch (error) {
+        console.error('Error fetching comments: ', error);
+        setLoadingComments(false);
+      }
+    };
+    fetchComments();
+  }, [id]);
+
+  const handleLike = async () => {
     setIsLiked(!isLiked);
     if (!isLiked && animationRef.current) {
       animationRef.current.play();
-    }else if(isLiked && animationRef.current){
+    } else if (isLiked && animationRef.current) {
       animationRef.current.stop();
     }
-    const response = axios.put('http://localhost:8000/onlycats/posts/update_likes/'+id, isLiked, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${jwt}`
-      }
-    });
-    console.log(response.data)
-    setLikes(response.data.likeNumber);
-  }
+    try {
+      const response = await axios.put('http://localhost:8000/onlycats/posts/update_likes/' + id, isLiked, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${jwt}`
+        }
+      });
+      setLikes(response.data.likeNumber);
+    } catch (error) {
+      console.error('Error updating likes:', error);
+    }
+  };
 
   const handleClick = () => {
     setIsClicked(!isClicked);
     if (!isClicked && animationRef.current) {
       animationRef.current.play();
-    }else if(isClicked && animationRef.current){
+    } else if (isClicked && animationRef.current) {
       animationRef.current.stop();
     }
-  }
+  };
 
-  const comments = useFetch('http://localhost:8000/onlycats/comments/post/'+id)
-  const commentsReady = comments.data;
+  const postNewComment = async () => {
+    let form = new FormData();
+    form.append('postId', id);
+    form.append('userId', userToken.userId);
+    form.append('content', textAreaContent);
+    form.append('displayname', userToken.username);
+    form.append('username', userToken.username);
+    try {
+      const response = await axios.post('http://localhost:8000/onlycats/comments/insert', form, {
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        }
+      });
+      // Clear the text area after posting the comment
+      setTextAreaContent('');
+      // Update the comments state to include the new comment
+      setComments([...comments, response.data]);
+    } catch (error) {
+      console.error('Error posting comment:', error);
+    }
+  };
 
   return (
     <div className='full_component'>
       <div className="post">
-      <div className='post_header'>
-        <div className="post_headerContent">
-          <Avatar src={avatar} className="post_avatar"/>
-          <div className="post_headerText">
-            <h3>
-              {displayName}{' '}
-              <span className="post_headerSpecial">
-                {verified && <VerifiedTwoTone className="post_badge" />} @{username}
-              </span>
-            </h3>
+        <div className='post_header'>
+          <div className="post_headerContent">
+            <Avatar src={avatar} className="post_avatar" />
+            <div className="post_headerText">
+              <h3>
+                {displayName}{' '}
+                <span className="post_headerSpecial">
+                  {verified && <VerifiedTwoTone className="post_badge" />} @{username}
+                </span>
+              </h3>
+            </div>
           </div>
         </div>
-      </div>
-      <br/>
-      <div className="post_body">
-        <div className='image-container'>
-              <img width="100%" src={postImage} alt="image" className='post_image'/>
-        </div>
-        <div className="post_footer">
-          <div className='footer_buttons'>
-            <button className='fav_button' onClick={handleLike}>
-            {isLiked ? (
+        <br />
+        <div className="post_body">
+          <div className='image-container'>
+            <img width="100%" src={postImage} alt="image" className='post_image' />
+          </div>
+          <div className="post_footer">
+            <div className='footer_buttons'>
+              <button className='fav_button' onClick={handleLike}>
+                {isLiked ? (
                   <DotLottieReact
                     autoplay={true}
-                    data={likeAnimationData} 
+                    data={likeAnimationData}
                     speed={1.5}
                     loop={false}
-                    style={{ width: '20px', height: '20px', down:'2px', scale:'2' }}
+                    style={{ width: '20px', height: '20px', down: '2px', scale: '2' }}
                   />
-                   
-                 ) : (
+                ) : (
                   <FavoriteBorderIcon fontSize="small" />
-                 )}
-
-            </button> 
-            <button>
-              <ChatBubbleOutlineIcon fontSize="small" />
-            </button>
-            <button onClick={handleClick}>
-              { isClicked ? (<DotLottieReact
-                  autoplay={true}
-                  data ={repeatAnimationData} 
-                  loop={false} // Ensure animation plays only once
-                  speed={2.5}
-                  style={{ width: '20px', height: '20px', top:'2px', scale: '2' }}
-              /> 
-            ) : (
-                <RepeatIcon fontSize="small" />
-              )
-            }
-            </button>
-          </div>
-          <div className="post_description">
-            <p>{text}</p>
+                )}
+              </button>
+              <button>
+                <ChatBubbleOutlineIcon fontSize="small" />
+              </button>
+              <button onClick={handleClick}>
+                {isClicked ? (
+                  <DotLottieReact
+                    autoplay={true}
+                    data={repeatAnimationData}
+                    loop={false}
+                    speed={2.5}
+                    style={{ width: '20px', height: '20px', top: '2px', scale: '2' }}
+                  />
+                ) : (
+                  <RepeatIcon fontSize="small" />
+                )}
+              </button>
+            </div>
+            <div className="post_description">
+              <p>{text}</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
       <div className='comments_container'>
         <div className='comment_title'>
           <b>Comments:</b>
         </div>
         <div className='comment_reponse'>
-        { !comments.isPending ? (
-          commentsReady != null? (
-            commentsReady.filter(comment => comment.postId == id)
-             .map((comment) => ( 
-               <Comment 
-               key={comment.id}
-               commentId={comment.id}
-               postId={comment.postId} 
-               userId={comment.userId}
-               content={comment.content} 
-               displayName={comment.displayname} 
-               username={comment.username} 
-               commentDate = {comment.commentDate}
-               likes = {comment.likes}
-              />
-            ))
+          {!loadingComments ? (
+            comments.length > 0 ? (
+              comments.filter(comment => comment.postId === id)
+                .map((comment) => (
+                  <Comment
+                    key={comment.id}
+                    commentId={comment.id}
+                    postId={comment.postId}
+                    userId={comment.userId}
+                    content={comment.content}
+                    displayName={comment.displayname}
+                    username={comment.username}
+                    commentDate={comment.commentDate}
+                    likes={comment.likes}
+                  />
+                ))
+            ) : (
+              <i style={{ color: 'gray' }}>There are no comments yet</i>
+            )
           ) : (
-            <i style={{color: 'gray'}}>There are no comments yet</i>
-          )
-          ) : (
-          <>
-            {(comments.isPending) ? (
-              <DotLottieReact
-                autoplay={true}
-                data={loadCatPaw}
-                speed={1}
-                loop={true}
-                />
-            ):(null)
-            }
-          </>
-          )
-          }
-
-          
-          {/* <Comment commentId={2} commentText={text} displayName={displayName} username={username} avatar={avatar} />
-          <Comment commentId={3} commentText={text} displayName={displayName} username={username} avatar={avatar} />
-          <Comment commentId={4} commentText={text} displayName={displayName} username={username} avatar={avatar} />
-          <Comment commentId={5} commentText={text} displayName={displayName} username={username} avatar={avatar} /> */}
+            <DotLottieReact
+              autoplay={true}
+              data={loadCatPaw}
+              speed={1}
+              loop={true}
+            />
+          )}
+          <div className='comment_textarea'>
+            <textarea value={textAreaContent} onChange={handleTextAreaChange} />
+            <button accessKey='c' onClick={postNewComment}>New comment</button>
+          </div>
         </div>
-        
       </div>
     </div>
   );
 }
 
 export default Post;
-

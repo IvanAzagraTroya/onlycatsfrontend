@@ -2,56 +2,67 @@ import React, { useState } from 'react';
 import './Login.css'; 
 import axios from 'axios';
 
-function Login({onLoginSuccess}) {
+function Login({ onLoginSuccess }) {
+  const [displayName, setDisplayName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [isRegister, setIsRegister] = useState(false);
+
   const handleLogin = async () => {
-    //Get user for login once i have the waypoint done, doesn't work on json-server
-    try{
+    try {
       axios.post('http://localhost:8000/onlycats/login', {
         email: email,
         password: password
       })
-      .then(function(response){
-        if(response.status != 200){
+      .then(function(response) {
+        if (response.status !== 200) {
           throw new Error("Error in login");
         }
         const token = response.data; 
         document.cookie = `jwt=${token}; path=/; domain=localhost`; 
-        //console.log("Logged in", token);
         onLoginSuccess();
       });
-    } catch(exception){
-      console.error(exception, response)
+    } catch (exception) {
+      console.error(exception);
     }
   };
+
   const handleRegister = async () => {
     const emailPattern = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$/;
-    if(email.length == 0 || !emailPattern.test(email)){
-      //console.log("Error with email");
-    }else {
-      try{
-        await axios.post('http://localhost:8000/onlycats/register', {
-            displayname: email,
-            username: "@"+email,
+    if (email.length === 0 || !emailPattern.test(email)) {
+      console.error("Error with email");
+    } else {
+      try {
+        const formData = new FormData();
+        formData.append('displayname', displayName);
+        formData.append('username', username);
+        formData.append('email', email);
+        formData.append('password', password);
+        if (profilePicture) {
+          formData.append('profile_picture', profilePicture);
+        }
+
+        await axios.post('http://localhost:8000/onlycats/register', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function(response) {
+          if (response.status !== 204) throw new Error("Error while registering");
+          axios.post('http://localhost:8000/onlycats/login', {
             email: email,
             password: password
-          }).then(function(response){
-            if(response.status != 204) throw new Error("Error while registering")
-              axios.post('http://localhost:8000/onlycats/login', {
-                email: email,
-                password: password
-              }).then(function(response){
-                if(response.status != 200)
-                  throw new Error("Error while login after register");
-                const token = response.data.token; 
-                document.cookie = `jwt=${token}; path=/; secure; HttpOnly`; 
-                console.log("Registered and Logged in", response.data);
-                onLoginSuccess();
-              });
+          }).then(function(response) {
+            if (response.status !== 200) throw new Error("Error while login after register");
+            const token = response.data.token; 
+            document.cookie = `jwt=${token}; path=/; secure; HttpOnly`; 
+            console.log("Registered and Logged in", response.data);
+            onLoginSuccess();
           });
+        });
       } catch (error) {
-          console.error('Register failed:', error);
+        console.error('Register failed:', error);
       }
     }
   };
@@ -59,7 +70,45 @@ function Login({onLoginSuccess}) {
   return (
     <div className="login-container">
       <h2>Welcome to Onlycats!</h2>
+      <div className="button-group">
+        <button type="button" onClick={() => setIsRegister(false)}>
+          Login
+        </button>
+        <button type="button" onClick={() => setIsRegister(true)}>
+          Register
+        </button>
+      </div>
       <form>
+        {isRegister && (
+          <>
+            <div className="form-group">
+              <label htmlFor="displayName">Display Name:</label>
+              <input
+                type="text"
+                id="displayName"
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="username">Username:</label>
+              <input
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="profilePicture">Profile Picture:</label>
+              <input
+                type="file"
+                id="profilePicture"
+                onChange={(e) => setProfilePicture(e.target.files[0])}
+              />
+            </div>
+          </>
+        )}
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
@@ -78,14 +127,18 @@ function Login({onLoginSuccess}) {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="button" onClick={handleLogin}>
-          Login
-        </button>
-        <button type="button" onClick={handleRegister}>
-          Register
-        </button>
+        {isRegister ? (
+          <button type="button" onClick={handleRegister}>
+            Register
+          </button>
+        ) : (
+          <button type="button" onClick={handleLogin}>
+            Login
+          </button>
+        )}
       </form>
     </div>
   );
 }
+
 export default Login;
