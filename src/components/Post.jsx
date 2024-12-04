@@ -10,7 +10,6 @@ import repeatAnimationData from '../assets/repeat-animation.json';
 import loadCatPaw from '../assets/cat-paw-load2.json';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import Comment from '../components/Comment.jsx';
-import useFetch from '../utils/UseFetch';
 import axios from 'axios';
 import getCookie from '../utils/GetCoockie';
 import decodeJwt from '../utils/DecodeJwt';
@@ -27,7 +26,7 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
   const [postImage, setPostImage] = useState('');
 
   const [textAreaContent, setTextAreaContent] = useState('');
-  const [comments, setComments] = useState([]); // State for comments
+  const [comments, setComments] = useState([]);
   const [loadingComments, setLoadingComments] = useState(true);
 
   const handleTextAreaChange = (event) => {
@@ -36,6 +35,7 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
 
   useEffect(() => {
     const fetchImage = async () => {
+      setLikes(likes);
       try {
         if (image !== "") {
           const response = await axios.get('http://localhost:8000/onlycats/posts/image?ImageUrl=' + image, {
@@ -51,39 +51,57 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
     fetchImage();
   }, [image]);
 
+  const fetchComments = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/onlycats/comments/post/' + id);
+      setComments(response.data);
+      setLoadingComments(false);
+    } catch (error) {
+      console.error('Error fetching comments: ', error);
+      setLoadingComments(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/onlycats/comments/post/' + id);
-        setComments(response.data);
-        setLoadingComments(false);
-      } catch (error) {
-        console.error('Error fetching comments: ', error);
-        setLoadingComments(false);
-      }
-    };
     fetchComments();
   }, [id]);
 
-  const handleLike = async () => {
+  const handleLike = () => {
+    postLike(!isLiked);
     setIsLiked(!isLiked);
-    if (!isLiked && animationRef.current) {
+
+    if (isLiked && animationRef.current) {
       animationRef.current.play();
-    } else if (isLiked && animationRef.current) {
+    } else if (!isLiked && animationRef.current) {
       animationRef.current.stop();
     }
+  };
+  const postLike = async (isLiked) => {
     try {
-      const response = await axios.put('http://localhost:8000/onlycats/posts/update_likes/' + id, isLiked, {
+      console.log("like antes put: ", isLiked)
+      const response = await axios.put('http://localhost:8000/onlycats/posts/update_likes/' + id, {isLiked}, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${jwt}`
         }
       });
+
+      let activityForm = new FormData();
+      activityForm.append('postId', id);
+      activityForm.append('userId', userToken.userId);
+      activityForm.append('actionType', 2);
+      activityForm.append('text', textAreaContent);
+      await axios.post('http://localhost:8000/onlycats/interactions/insert', activityForm, {
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        }
+      });
+      console.log(isLiked)
       setLikes(response.data.likeNumber);
     } catch (error) {
       console.error('Error updating likes:', error);
     }
-  };
+  }
 
   const handleClick = () => {
     setIsClicked(!isClicked);
@@ -106,11 +124,24 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
         headers: {
           Authorization: `Bearer ${jwt}`
         }
+      }).finally(() => {
+        setLoadingComments(true);
+        fetchComments();
+      }).then(response => {
+        let responseData = response.data;
+        setTextAreaContent('');
+        setComments([...comments, responseData]);
       });
-      // Clear the text area after posting the comment
-      setTextAreaContent('');
-      // Update the comments state to include the new comment
-      setComments([...comments, response.data]);
+      let activityForm = new FormData();
+      activityForm.append('postId', id);
+      activityForm.append('userId', userToken.userId);
+      activityForm.append('actionType', 3);
+      activityForm.append('text', textAreaContent);
+      await axios.post('http://localhost:8000/onlycats/interactions/insert', activityForm, {
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        }
+      });
     } catch (error) {
       console.error('Error posting comment:', error);
     }
@@ -141,20 +172,24 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
             <div className='footer_buttons'>
               <button className='fav_button' onClick={handleLike}>
                 {isLiked ? (
-                  <DotLottieReact
+                  <>
+                    <DotLottieReact
                     autoplay={true}
                     data={likeAnimationData}
                     speed={1.5}
                     loop={false}
                     style={{ width: '20px', height: '20px', down: '2px', scale: '2' }}
                   />
+                  {likess}
+                  </>
                 ) : (
-                  <FavoriteBorderIcon fontSize="small" />
+                  <>
+                    <FavoriteBorderIcon fontSize="small" /> 
+                    {likess}
+                  </>
                 )}
               </button>
-              <button>
-                <ChatBubbleOutlineIcon fontSize="small" />
-              </button>
+                <ChatBubbleOutlineIcon fontSize="small" /> {comments.length}
               <button onClick={handleClick}>
                 {isClicked ? (
                   <DotLottieReact

@@ -12,7 +12,7 @@ function Login({ onLoginSuccess }) {
 
   const handleLogin = async () => {
     try {
-      axios.post('http://localhost:8000/onlycats/login', {
+      await axios.post('http://localhost:8000/onlycats/login', {
         email: email,
         password: password
       })
@@ -23,6 +23,7 @@ function Login({ onLoginSuccess }) {
         const token = response.data; 
         document.cookie = `jwt=${token}; path=/; domain=localhost`; 
         onLoginSuccess();
+        location.reload();
       });
     } catch (exception) {
       console.error(exception);

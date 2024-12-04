@@ -15,13 +15,12 @@ import decodeJwt from './utils/DecodeJwt';
 import axios from 'axios';
 
 function App() {
-  const [isFeedSelected, setIsFeedSelected] = useState(false);
-  const [isProfileSelected, setIsProfileSelected] = useState(true);
+  const [isFeedSelected, setIsFeedSelected] = useState(true);
+  const [isProfileSelected, setIsProfileSelected] = useState(false);
   const [isNotificationsSelected, setIsNotificationsSelected] = useState(false);
   const [isPublishSelected, setIsPublishSelected] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
   const [jwt, setJwt] = useState();
-  const [userToken, setUserToken] = useState();
   const [user, setUser] = useState();
   const [interactions, setInteractions] = useState([]);
 
@@ -39,12 +38,8 @@ function App() {
   }, [jwt]);
 
   const handleLogin = async () => {
-    console.log("inside handle login");
     if (jwt) {
-      console.log(jwt);
       const token = decodeJwt(jwt);
-      console.log(token);
-      setUserToken(token);
 
       if (token) {
         try {
@@ -56,16 +51,17 @@ function App() {
           if (logUser) {
             setUser(logUser.data);
             setIsLogged(true);
-            console.log(logUser.data);
           }
         } catch (error) {
           console.error('Error logging in:', error);
         }
+        fetchInteractionsData(token.userId)
       }
     }
   }
 
   function handleFeedClick() {
+    location.reload();
     setIsFeedSelected(true);
     setIsProfileSelected(false);
     setIsNotificationsSelected(false);
@@ -80,6 +76,9 @@ function App() {
   }
   function handleNotificationsClick() {
     jwt ? setIsLogged(true) : null
+    if(isLogged) {
+      fetchInteractionsData(user.userId)
+    }
     setIsFeedSelected(false);
     setIsProfileSelected(false);
     setIsNotificationsSelected(true);
@@ -93,30 +92,26 @@ function App() {
     setIsPublishSelected(true);
   }
 
-  const fetchInteractionsData = async () => {
+  const fetchInteractionsData = async (userId) => {
     try {
-      const postsInteractions = await axios.get(`http://localhost:8000/onlycats/posts/ids?id=${user.userId}`, {
+      const postsInteractions = await axios.get(`http://localhost:8000/onlycats/posts/ids?id=${userId}`, {
         headers: {
           'Authorization': `Bearer ${jwt}`
         }
       });
-  
-      console.log(postsInteractions);
-  
+
       const interactionPromises = postsInteractions.data.map(id => 
-        axios.get(`http://localhost:8000/onlycats/interactions/${id}`, {
+        axios.get(`http://localhost:8000/onlycats/interactions/post/id?postId=`+id, {
           headers: {
             'Authorization': `Bearer ${jwt}`
           }
         })
       );
-  
+      let newInteractions;
       const interactionResponses = await Promise.all(interactionPromises);
-      const interactionsArray = interactionResponses.map(response => response.data);
-  
-      setInteractions(interactionsArray);
-      console.log(interactionsArray)
-      console.log(interactions)
+      newInteractions = interactionResponses.map(response => response.data)
+      setInteractions(...interactions, newInteractions);
+      //En interactions está guardando las interacciones correctamente, pero en interactions no se está guardando nada.
     } catch (error) {
       console.error('Error fetching interactions:', error);
     }
@@ -128,14 +123,12 @@ function App() {
 
   const usersReady = users.data;
   const postsReady = posts.data;
-  const activityReady = activity.data;
 
   return (
     <div>
-      {location.reload}
-      {/* <h1 className="web-header">Onlycats <img src='src/assets/nyan-cat.gif'/></h1> */}
+      <h1 className="web-header">Onlycats <img src='src/assets/nyan-cat.gif'/></h1>
       <div className="container">
-        {/* <div>
+        <div>
           <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
           <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
           <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
@@ -144,7 +137,7 @@ function App() {
           <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
           <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
           <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
-        </div> */}
+        </div>
 
         <div className="menu-column">
           <button className="menu-button" onClick={handleUserClick}>
@@ -201,9 +194,9 @@ function App() {
           )}
           {isLogged ? (
             <div>
-              {isProfileSelected && !users.isPending ? (
+              {isProfileSelected && !users.isPending  && user != undefined? (
                 <div className='content-container'>
-                  <User />
+                  <User display_name={user.displayName} username={user.userName} profile_picture={user.profilePicture} follower_number={user.followerMum} isVerified={user.isVerified} number_posts={user.postNum} following_number={user.followingNum}/>
                 </div>
               ): (
                 <>
@@ -212,12 +205,15 @@ function App() {
               )}
               {isNotificationsSelected ? (
                 <div className='content-container'>
-                  {console.log(fetchInteractionsData())}
-                { interactions != undefined ? (
-                    <Notification key={activity.id} avatar={usersReady[2].profile_picture} display_name={usersReady[2].display_name} post_id={activity.post_id}
-                    user_id={usersReady[2].id} text={activity.text} reaction_type={activity.reaction_type} activity_date={activity.activity_date}/>
+                { isLogged && interactions ? (
+                  interactions.map((i) => (
+                    <Notification key={i.id} avatar={user.profilePicture} display_name={user.displayName} post_id={i.postId}
+                     user_id={i.userId} text={i.text} reaction_type={i.activityType} activity_date={i.activityDate}/>
+                  ))
                 ): ( (isLogged && interactions == undefined) ? (
-                  null
+                  <div className='notification-message'>
+                    <h1>THERE ARE NO NOTIFICATIONS</h1>
+                  </div>
                 ) : (null)
                 )}
                 </div>

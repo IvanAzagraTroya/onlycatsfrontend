@@ -10,23 +10,29 @@ function User({ id, display_name, username, profile_picture, follower_number, fo
   const jwt = getCookie('jwt');
   const userToken = jwt ? decodeJwt(jwt) : null;
   const [posts, setPosts] = useState([]);
+  const [numLikes, setNumLikes] = useState(0);
 
-  useEffect(() => {
-    async function fetchPosts() {
-      try {
-        const postRequest = await axios.get('http://localhost:8000/onlycats/posts/user/' + userToken.userId, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${jwt}`
-          }
-        });
-        setPosts(postRequest.data);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      }
+
+  async function fetchPosts() {
+    try {
+      const postRequest = await axios.get('http://localhost:8000/onlycats/posts/user/' + userToken.userId, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${jwt}`
+        }
+      });
+      setPosts(postRequest.data);
+      let thisLikes = 0;
+      posts.forEach(post => {
+        thisLikes += post.likeNumber;
+      });
+      setNumLikes(thisLikes);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
     }
-
-    fetchPosts();
+  }
+  useEffect(() => {
+   if(posts.length==0) fetchPosts(); 
   }, [userToken, jwt]);
 
   return (
@@ -43,10 +49,11 @@ function User({ id, display_name, username, profile_picture, follower_number, fo
         </div>
         <div className="user-stats">
           <div>
-            <h3>Posts</h3> {number_posts}
-            <h3>Following</h3> {following_number}
-            <h3>Followers</h3> {follower_number}
-          </div>
+            <h3><i>Posts</i></h3> <b>{posts.length}</b> &nbsp;
+            {/* <h3>Following</h3> {following_number} &nbsp;
+            <h3>Followers</h3> {follower_number} &nbsp; */}
+            <h3><i>Likes Received</i></h3> <b>{numLikes}</b> &nbsp;
+           </div>
         </div>
       </div>
       <div className="user-tweets">
@@ -64,7 +71,10 @@ function User({ id, display_name, username, profile_picture, follower_number, fo
             date={post.postDate}
           />
         )) : (
-          <h1>No posts available</h1>
+          <>
+            <a></a>
+            <h1>No posts available</h1>
+          </>
         )}
       </div>
     </div>

@@ -33,6 +33,19 @@ function Upload() {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${jwt}`
                 }
+            }).finally(
+                alert("Post uploaded")
+            );
+
+            let activityForm = new FormData();
+            activityForm.append('postId', id);
+            activityForm.append('userId', userToken.userId);
+            activityForm.append('actionType', 1);
+            activityForm.append('text', 'A new Post has been made!');
+            await axios.post('http://localhost:8000/onlycats/interactions/insert', activityForm, {
+                headers: {
+                Authorization: `Bearer ${jwt}`
+                }
             });
 
             if (response.status !== 201) {
