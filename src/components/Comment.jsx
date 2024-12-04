@@ -28,11 +28,39 @@ const Comment = ({ id, content, avatar, displayName, username, commentDate, like
   trimmedComment = content.length >= 100 ? content.substring(0, 50) + ' ...' : content;
 
   const handleLike = () => {
+    commentLike(!isLiked);
     setIsLiked(!isLiked);
     if (!isLiked && animationRef.current) {
       animationRef.current.play();
     }else if(isLiked && animationRef.current){
       animationRef.current.stop();
+    }
+  }
+
+  const commentLike = async (isLiked) => {
+    try {
+      console.log("like antes put: ", isLiked)
+      const response = await axios.put('http://localhost:8000/onlycats/comments/update_likes/' + id, {isLiked}, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${jwt}`
+        }
+      });
+
+      let activityForm = new FormData();
+      activityForm.append('commentId', id);
+      activityForm.append('userId', userToken.userId);
+      activityForm.append('actionType', 2); // Revisar que tipo de acción es el like de comentario
+      activityForm.append('text', "Your comment received a like");
+      await axios.post('http://localhost:8000/onlycats/interactions/insert', activityForm, {
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        }
+      });
+      console.log(isLiked)
+      setLikes(response.data.likeNumber);
+    } catch (error) {
+      console.error('Error updating likes:', error);
     }
   }
 
