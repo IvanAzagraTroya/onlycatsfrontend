@@ -36,19 +36,11 @@ function Login({ onLoginSuccess }) {
       console.error("Error with email");
     } else {
       try {
-        const formData = new FormData();
-        formData.append('displayname', displayName);
-        formData.append('username', username);
-        formData.append('email', email);
-        formData.append('password', password);
-        if (profilePicture) {
-          formData.append('profile_picture', profilePicture);
-        }
-
-        await axios.post('http://localhost:8000/onlycats/register', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
+        await axios.post('http://localhost:8000/onlycats/register', {
+          displayname: displayName,
+          username: username,
+          email: email,
+          password: password
         }).then(function(response) {
           if (response.status !== 204) throw new Error("Error while registering");
           axios.post('http://localhost:8000/onlycats/login', {

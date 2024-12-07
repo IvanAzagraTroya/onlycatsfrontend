@@ -22,17 +22,17 @@ function User({ id, display_name, username, profile_picture, follower_number, fo
         }
       });
       setPosts(postRequest.data);
-      let thisLikes = 0;
-      posts.forEach(post => {
-        thisLikes += post.likeNumber;
-      });
-      setNumLikes(thisLikes);
     } catch (error) {
       console.error('Error fetching posts:', error);
     }
   }
   useEffect(() => {
-   if(posts.length==0) fetchPosts(); 
+    let thisLikes = 0;
+    if(posts.length==0) fetchPosts(); 
+    posts.forEach(post => {
+      thisLikes += post.likeNumber;
+    });
+    setNumLikes(thisLikes);
   }, [userToken, jwt]);
 
   return (

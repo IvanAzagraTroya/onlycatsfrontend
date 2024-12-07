@@ -19,7 +19,7 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
   const userToken = jwt ? decodeJwt(jwt) : null;
 
   const [isLiked, setIsLiked] = useState(false);
-  const [likess, setLikes] = useState(0);
+  const [likess, setLikes] = useState(likes);
   const animationRef = useRef(null);
 
   const [isClicked, setIsClicked] = useState(false);
@@ -35,7 +35,7 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
 
   useEffect(() => {
     const fetchImage = async () => {
-      setLikes(likes);
+      setLikes(likess);
       try {
         if (image !== "") {
           const response = await axios.get('http://localhost:8000/onlycats/posts/image?ImageUrl=' + image, {
@@ -90,13 +90,12 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
       activityForm.append('postId', id);
       activityForm.append('userId', userToken.userId);
       activityForm.append('actionType', 2);
-      activityForm.append('text', textAreaContent);
+      activityForm.append('text', "Someone liked yout post");
       await axios.post('http://localhost:8000/onlycats/interactions/insert', activityForm, {
         headers: {
           Authorization: `Bearer ${jwt}`
         }
       });
-      console.log(isLiked)
       setLikes(response.data.likeNumber);
     } catch (error) {
       console.error('Error updating likes:', error);
@@ -136,7 +135,7 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
       activityForm.append('postId', id);
       activityForm.append('userId', userToken.userId);
       activityForm.append('actionType', 3);
-      activityForm.append('text', textAreaContent);
+      activityForm.append('text', "Someone commented: "+textAreaContent);
       await axios.post('http://localhost:8000/onlycats/interactions/insert', activityForm, {
         headers: {
           Authorization: `Bearer ${jwt}`
@@ -221,7 +220,7 @@ function Post({ id, owner_id, displayName, username, verified, text, image, avat
                 .map((comment) => (
                   <Comment
                     key={comment.id}
-                    commentId={comment.id}
+                    id={comment.id}
                     postId={comment.postId}
                     userId={comment.userId}
                     content={comment.content}

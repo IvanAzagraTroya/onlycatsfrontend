@@ -23,13 +23,27 @@ function App() {
   const [jwt, setJwt] = useState();
   const [user, setUser] = useState();
   const [interactions, setInteractions] = useState([]);
+  const [userInteractions, setUserInteractions] = useState([])
 
   useEffect(() => {
     const cookieJwt = getCookie('jwt');
     if (cookieJwt) {
       setJwt(cookieJwt);
     }
+    
   }, []);
+  const fetchUserInteractions = async () => {
+    if(jwt != undefined){
+      const token = decodeJwt(jwt);
+      let response = await axios.get('http://localhost:8000/onlycats/interactions/user/'+token.userId, {
+        headers: {
+          'Authorization': `Bearer ${jwt}`
+        }
+      })
+        console.log(response);
+        setUserInteractions(response.data)
+    }
+  }
 
   useEffect(() => {
     if (jwt || user == undefined) {
@@ -56,6 +70,7 @@ function App() {
           console.error('Error logging in:', error);
         }
         fetchInteractionsData(token.userId)
+        fetchUserInteractions();
       }
     }
   }
@@ -110,8 +125,7 @@ function App() {
       let newInteractions;
       const interactionResponses = await Promise.all(interactionPromises);
       newInteractions = interactionResponses.map(response => response.data)
-      setInteractions(...interactions, newInteractions);
-      //En interactions está guardando las interacciones correctamente, pero en interactions no se está guardando nada.
+      //setInteractions(...interactions, newInteractions);
     } catch (error) {
       console.error('Error fetching interactions:', error);
     }
@@ -128,7 +142,7 @@ function App() {
     <div>
       <h1 className="web-header">Onlycats <img src='src/assets/nyan-cat.gif'/></h1>
       <div className="container">
-        <div>
+        <div className='background'>
           <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
           <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
           <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
@@ -206,8 +220,8 @@ function App() {
               {isNotificationsSelected ? (
                 <div className='content-container'>
                 { isLogged && interactions ? (
-                  interactions.map((i) => (
-                    <Notification key={i.id} avatar={user.profilePicture} display_name={user.displayName} post_id={i.postId}
+                  userInteractions.map((i) => (
+                    <Notification key={i.id} id={i.id} avatar={user.profilePicture} display_name={user.displayName} post_id={i.postId}
                      user_id={i.userId} text={i.text} reaction_type={i.activityType} activity_date={i.activityDate}/>
                   ))
                 ): ( (isLogged && interactions == undefined) ? (

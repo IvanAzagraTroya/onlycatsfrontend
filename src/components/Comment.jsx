@@ -11,19 +11,24 @@ import { Avatar } from '@mui/material';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 import React, {useState, useRef, useEffect} from 'react';
-import useFetch from '../utils/UseFetch';
+import axios from 'axios';
+
+import getCookie from '../utils/GetCoockie';
+import decodeJwt from '../utils/DecodeJwt';
 
 const Comment = ({ id, content, avatar, displayName, username, commentDate, likes, postId, userId }) => {
+  const jwt = getCookie('jwt');
+  const userToken = jwt ? decodeJwt(jwt) : null;
 
   const [isLiked, setIsLiked] = useState(false);
   const animationRef = useRef(null);
 
   const [isClicked, setIsClicked] = useState(false);
+  const [likess, setLikes] = useState(likes);
 
   const [textClicked, setIsTextClicked] = useState(false);
   var trimmedComment = "";
-
-  var currentLikes = likes;
+  
   if(content == undefined) content = "";
   trimmedComment = content.length >= 100 ? content.substring(0, 50) + ' ...' : content;
 
@@ -46,19 +51,17 @@ const Comment = ({ id, content, avatar, displayName, username, commentDate, like
           'Authorization': `Bearer ${jwt}`
         }
       });
-
       let activityForm = new FormData();
-      activityForm.append('commentId', id);
+      activityForm.append('postId', id);
       activityForm.append('userId', userToken.userId);
-      activityForm.append('actionType', 2); // Revisar que tipo de acción es el like de comentario
+      activityForm.append('actionType', 2);
       activityForm.append('text', "Your comment received a like");
       await axios.post('http://localhost:8000/onlycats/interactions/insert', activityForm, {
         headers: {
           Authorization: `Bearer ${jwt}`
         }
       });
-      console.log(isLiked)
-      setLikes(response.data.likeNumber);
+      setLikes(response.data.likes);
     } catch (error) {
       console.error('Error updating likes:', error);
     }
@@ -68,21 +71,14 @@ const Comment = ({ id, content, avatar, displayName, username, commentDate, like
     setIsClicked(!isClicked);
     if (!isClicked && animationRef.current) {
       animationRef.current.play();
-      currentLikes = likes+1;
     }else if(isClicked && animationRef.current){
       animationRef.current.stop();
-      currentLikes = currentLikes -1;
     }
   }
 
   const handleExpandText = () => {
     setIsTextClicked(!textClicked);
   }
-
-  const comments = useFetch('http://localhost:8000/onlycats/comments')
-  const activity = useFetch('http://localhost:8000/onlycats/interactions')
-  const commentsReady = comments.data;
-  const activityReady = activity.data;
   
     return (
       <div className='comment'>
@@ -111,18 +107,23 @@ const Comment = ({ id, content, avatar, displayName, username, commentDate, like
         <div className='comment_buttons'>
             <button className='fav_button' onClick={handleLike}>
             {isLiked ? ( 
-                  <DotLottieReact
+                  <>
+                    <DotLottieReact
                     autoplay={true}
                     data={likeAnimationData} 
                     speed={1.5}
                     loop={false} // Ensure animation plays only once
                     style={{ width: '20px', height: '20px', left:'5px', position:'relative', scale: '2' }} // Adjust size as needed
-                  />
+                    />
+                    {likess}
+                  </>
                  ) : (
-                  <FavoriteBorderIcon fontSize="small" />
+                  <>
+                    <FavoriteBorderIcon fontSize="small" />
+                    {likess}
+                  </>
                  )}
-
-            </button> <p>{currentLikes}</p>
+            </button>
             <button>
               <ChatBubbleOutlineIcon fontSize="small" />
             </button>
