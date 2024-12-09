@@ -30,7 +30,6 @@ function App() {
     if (cookieJwt) {
       setJwt(cookieJwt);
     }
-    
   }, []);
   const fetchUserInteractions = async () => {
     if(jwt != undefined){
@@ -140,17 +139,17 @@ function App() {
 
   return (
     <div>
-      <h1 className="web-header">Onlycats <img src='src/assets/nyan-cat.gif'/></h1>
+      <h1 className="web-header">Onlycats <img src='/nyan-cat.gif'/></h1>
       <div className="container">
         <div className='background'>
-          <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
-          <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
-          <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
-          <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
-          <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
-          <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
-          <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
-          <img src="src/assets/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+          <img src="/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+          <img src="/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+          <img src="/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+          <img src="/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+          <img src="/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+          <img src="/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+          <img src="/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
+          <img src="/nyan-cat.gif" alt="nyan-cat-gif" className="gif" />
         </div>
 
         <div className="menu-column">
@@ -168,31 +167,34 @@ function App() {
           </button>
         </div>
         <div className="content-column">
-          {isFeedSelected && !posts.isPending && !users.isPending ? (
+          {isFeedSelected && !posts.isPending && !users.isPending && posts != null ? (
 
             <div className='content-container'>
-              {postsReady.map((post) => {
-                const user = usersReady.find((user) =>
-                  user.id == post.owner_id,
-                );
-                if (user) {
-                  return (
-                    <Post
-                      key={post.id}
-                      id={post.id}
-                      displayName={user.displayName}
-                      username={user.username}
-                      verified={user.verified}
-                      text={post.text}
-                      image={post.imageUrl}
-                      likes={post.likeNumber}
-                      avatar={user.profile_picture}
-                    />
+              {posts != null && postsReady != null ? (
+                postsReady.map((post) => {
+                  const user = usersReady.find((user) =>
+                    user.id == post.owner_id,
                   );
-                } else {
-                  <User displayName={"User not found"} username={""} profile_picture={""} follower_number={0} following_number={0} number_posts={0}/>
-                  return null;
-                }})}
+                  if (user) {
+                    return (
+                      <Post
+                        key={post.id}
+                        id={post.id}
+                        displayName={user.displayName}
+                        username={user.username}
+                        verified={user.verified}
+                        text={post.text}
+                        image={post.imageUrl}
+                        likes={post.likeNumber}
+                        avatar={user.profile_picture}
+                      />
+                    );
+                  } else {
+                    <User displayName={"User not found"} username={""} profile_picture={""} follower_number={0} following_number={0} number_posts={0}/>
+                    return null;
+                  }})
+              ):(null)
+              }
             </div>
           ) : (
             <>
