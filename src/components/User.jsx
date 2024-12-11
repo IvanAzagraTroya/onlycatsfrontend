@@ -29,10 +29,12 @@ function User({ id, display_name, username, profile_picture, follower_number, fo
   useEffect(() => {
     let thisLikes = 0;
     if(posts.length==0) fetchPosts(); 
-    posts.forEach(post => {
-      thisLikes += post.likeNumber;
-    });
-    setNumLikes(thisLikes);
+    else{
+      posts.forEach(post => {
+        thisLikes += post.likeNumber;
+      });
+      setNumLikes(thisLikes);
+    }
   }, [userToken, jwt]);
 
   return (
@@ -57,7 +59,7 @@ function User({ id, display_name, username, profile_picture, follower_number, fo
         </div>
       </div>
       <div className="user-tweets">
-        {posts.length > 0 ? posts.map(post => (
+        {posts.length != 0 ? posts.map(post => (
           <Post
             key={post.id}
             id={post.id}

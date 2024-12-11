@@ -170,7 +170,7 @@ function App() {
           {isFeedSelected && !posts.isPending && !users.isPending && posts != null ? (
 
             <div className='content-container'>
-              {posts != null && postsReady != null ? (
+              {posts != null && postsReady != null && users != undefined && usersReady != null ? (
                 postsReady.map((post) => {
                   const user = usersReady.find((user) =>
                     user.id == post.owner_id,
@@ -221,12 +221,12 @@ function App() {
               )}
               {isNotificationsSelected ? (
                 <div className='content-container'>
-                { isLogged && interactions ? (
+                { isLogged && interactions && userInteractions != null && userInteractions.length != 0 ? (
                   userInteractions.map((i) => (
                     <Notification key={i.id} id={i.id} avatar={user.profilePicture} display_name={user.displayName} post_id={i.postId}
                      user_id={i.userId} text={i.text} reaction_type={i.activityType} activity_date={i.activityDate}/>
                   ))
-                ): ( (isLogged && interactions == undefined) ? (
+                ): ( (isLogged && userInteractions.length == 0) ? (
                   <div className='notification-message'>
                     <h1>THERE ARE NO NOTIFICATIONS</h1>
                   </div>
